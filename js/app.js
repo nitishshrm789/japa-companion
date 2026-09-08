@@ -16,6 +16,7 @@
 
   let sessionReady = false;
   let progressText = "Saved 0 / 16";
+  let timerUiReady = false;
 
   function updateProgress(count) {
     if (count >= MAX_ROUNDS) {
@@ -24,7 +25,9 @@
       progressText = "Saved " + count + " / " + MAX_ROUNDS;
     }
     roundProgress.textContent = progressText;
-    window.JapaTimerFullscreen.sync();
+    if (timerUiReady) {
+      window.JapaTimerFullscreen.sync();
+    }
   }
 
   function persistSession() {
@@ -53,7 +56,9 @@
   const stopwatch = window.JapaStopwatch.create(function onTick(elapsedMs) {
     const text = window.JapaTime.formatElapsed(elapsedMs);
     timerDisplay.textContent = text;
-    window.JapaTimerFullscreen.sync();
+    if (timerUiReady) {
+      window.JapaTimerFullscreen.sync();
+    }
   });
 
   function pauseAndSave() {
@@ -114,6 +119,7 @@
     onStop: pauseAndSave,
     onReset: resetRound,
   });
+  timerUiReady = true;
 
   window.JapaTabs.init({
     initialTab: "clock",

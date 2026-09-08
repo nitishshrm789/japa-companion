@@ -33,7 +33,7 @@ window.JapaTimerFullscreen = {
   },
 
   sync() {
-    if (this.overlay.hidden) {
+    if (!this.overlay || this.overlay.hidden || !this.displayEl) {
       return;
     }
     this.displayEl.textContent = window.JapaTime.formatElapsed(
@@ -43,6 +43,9 @@ window.JapaTimerFullscreen = {
   },
 
   open() {
+    if (!this.overlay) {
+      return;
+    }
     this.overlay.hidden = false;
     document.body.classList.add("is-timer-fullscreen");
     this.sync();
@@ -50,11 +53,14 @@ window.JapaTimerFullscreen = {
   },
 
   close() {
+    if (!this.overlay) {
+      return;
+    }
     this.overlay.hidden = true;
     document.body.classList.remove("is-timer-fullscreen");
   },
 
   isOpen() {
-    return !this.overlay.hidden;
+    return !!(this.overlay && !this.overlay.hidden);
   },
 };
