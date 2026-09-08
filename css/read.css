@@ -1,0 +1,122 @@
+.read-help {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.read-root {
+  padding-bottom: var(--space-lg);
+}
+
+.read-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  background: #fffaf3;
+  padding:
+    max(var(--space-md), env(safe-area-inset-top))
+    max(var(--space-md), env(safe-area-inset-right))
+    max(var(--space-lg), env(safe-area-inset-bottom))
+    max(var(--space-md), env(safe-area-inset-left));
+}
+
+.read-fullscreen[hidden] {
+  display: none;
+}
+
+.read-fullscreen__bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.read-fullscreen__close {
+  min-height: 2.4rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.9rem;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.read-fullscreen__body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  padding: var(--space-lg) var(--space-md);
+  max-width: 40rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.read-fullscreen__title {
+  font-size: clamp(1.35rem, 5vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  line-height: 1.25;
+}
+
+.read-fullscreen__content {
+  font-size: clamp(1.05rem, 3.8vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--color-ink);
+}
+
+.read-fullscreen__content p {
+  margin-bottom: var(--space-md);
+}
+
+.read-fullscreen__source {
+  display: block;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid #ddd6cb;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: var(--color-muted);
+  font-style: normal;
+}
+
+.read-fullscreen__mantra {
+  white-space: pre-line;
+  font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  margin: var(--space-lg) 0;
+}
+
+.read-fullscreen__body--mm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.read-fullscreen__mantra--mm {
+  margin: 0;
+  font-size: clamp(1.45rem, 6vw, 2rem);
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.read-fullscreen__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+body.is-reading-fullscreen {
+  overflow: hidden;
+}
