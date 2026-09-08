@@ -123,15 +123,19 @@
 .photo-fullscreen__stage {
   flex: 1;
   min-height: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #fff;
   border-radius: 0.35rem;
   background: #000;
-  touch-action: pan-x pan-y;
+  touch-action: none;
+  cursor: default;
+}
+
+.photo-fullscreen__stage.is-zoomed {
+  cursor: grab;
 }
 
 .photo-fullscreen__img {
@@ -139,9 +143,11 @@
   max-height: 100%;
   object-fit: contain;
   transform-origin: center center;
-  transition: transform 0.12s ease;
+  transition: none;
   user-select: none;
   -webkit-user-drag: none;
+  pointer-events: none;
+  will-change: transform;
 }
 
 body.is-photo-fullscreen {
