@@ -1,5 +1,5 @@
 /**
- * Tab navigation: Clock | Read this | Hare Krsna MM | Photos
+ * Tab navigation: Clock | Result | Read this | Hare Krsna MM | Photos
  */
 window.JapaTabs = {
   init(options) {
@@ -8,6 +8,7 @@ window.JapaTabs = {
     );
     const panels = {
       clock: document.getElementById("panel-clock"),
+      result: document.getElementById("panel-result"),
       read: document.getElementById("panel-read"),
       mm: document.getElementById("panel-mm"),
       photos: document.getElementById("panel-photos"),

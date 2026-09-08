@@ -1,11 +1,13 @@
 /**
- * Full-screen photo viewer: buttons, wheel, pinch-zoom, and pan.
- * Mobile: two-finger pinch zoom; one-finger drag when zoomed (like gallery apps).
+ * Full-screen photo viewer with reliable mobile pinch + pan.
+ * Uses Touch Events (best on phones) + mouse/wheel on desktop.
  */
 window.JapaPhotoViewer = {
   MIN_ZOOM: 1,
   MAX_ZOOM: 5,
   ZOOM_STEP: 0.25,
+  DOUBLE_TAP_MS: 280,
+  DOUBLE_TAP_ZOOM: 2.5,
 
   init() {
     this.overlay = document.getElementById("photo-fullscreen");
@@ -21,14 +23,23 @@ window.JapaPhotoViewer = {
     this.panX = 0;
     this.panY = 0;
 
-    this.pointers = new Map();
     this.pinchStartDistance = 0;
     this.pinchStartZoom = 1;
     this.panStartX = 0;
     this.panStartY = 0;
     this.panOriginX = 0;
     this.panOriginY = 0;
-    this.isPanning = false;
+    this.activeTouches = 0;
+    this.lastTapTime = 0;
+    this.lastTapX = 0;
+    this.lastTapY = 0;
+    this.movedDuringTouch = false;
+
+    this.mouseDragging = false;
+    this.mouseStartX = 0;
+    this.mouseStartY = 0;
+    this.mouseOriginX = 0;
+    this.mouseOriginY = 0;
 
     this.closeBtn.addEventListener("click", () => this.close());
     this.zoomInBtn.addEventListener("click", () => this.zoomBy(this.ZOOM_STEP));
@@ -37,6 +48,13 @@ window.JapaPhotoViewer = {
     );
     this.zoomResetBtn.addEventListener("click", () => this.resetView());
 
+    this.bindWheel();
+    this.bindTouch();
+    this.bindMouse();
+    this.bindKeys();
+  },
+
+  bindWheel() {
     this.stageEl.addEventListener(
       "wheel",
       (event) => {
@@ -48,29 +66,61 @@ window.JapaPhotoViewer = {
       },
       { passive: false }
     );
+  },
+
+  bindTouch() {
+    const opts = { passive: false };
 
     this.stageEl.addEventListener(
-      "pointerdown",
-      (event) => this.onPointerDown(event),
-      { passive: false }
+      "touchstart",
+      (event) => this.onTouchStart(event),
+      opts
     );
     this.stageEl.addEventListener(
-      "pointermove",
-      (event) => this.onPointerMove(event),
-      { passive: false }
+      "touchmove",
+      (event) => this.onTouchMove(event),
+      opts
     );
-    this.stageEl.addEventListener("pointerup", (event) =>
-      this.onPointerUp(event)
+    this.stageEl.addEventListener(
+      "touchend",
+      (event) => this.onTouchEnd(event),
+      opts
     );
-    this.stageEl.addEventListener("pointercancel", (event) =>
-      this.onPointerUp(event)
+    this.stageEl.addEventListener(
+      "touchcancel",
+      (event) => this.onTouchEnd(event),
+      opts
     );
-    this.stageEl.addEventListener("pointerleave", (event) => {
-      if (this.pointers.has(event.pointerId)) {
-        this.onPointerUp(event);
+  },
+
+  bindMouse() {
+    this.stageEl.addEventListener("mousedown", (event) => {
+      if (this.overlay.hidden || this.zoom <= this.MIN_ZOOM) {
+        return;
       }
+      event.preventDefault();
+      this.mouseDragging = true;
+      this.mouseStartX = event.clientX;
+      this.mouseStartY = event.clientY;
+      this.mouseOriginX = this.panX;
+      this.mouseOriginY = this.panY;
     });
 
+    window.addEventListener("mousemove", (event) => {
+      if (!this.mouseDragging) {
+        return;
+      }
+      this.panX = this.mouseOriginX + (event.clientX - this.mouseStartX);
+      this.panY = this.mouseOriginY + (event.clientY - this.mouseStartY);
+      this.applyTransform();
+    });
+
+    window.addEventListener("mouseup", () => {
+      this.mouseDragging = false;
+    });
+  },
+
+  bindKeys() {
     document.addEventListener("keydown", (event) => {
       if (this.overlay.hidden) {
         return;
@@ -87,18 +137,128 @@ window.JapaPhotoViewer = {
     });
   },
 
+  touchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.hypot(dx, dy);
+  },
+
+  onTouchStart(event) {
+    if (this.overlay.hidden) {
+      return;
+    }
+
+    event.preventDefault();
+    this.activeTouches = event.touches.length;
+    this.movedDuringTouch = false;
+
+    if (event.touches.length === 2) {
+      this.pinchStartDistance = this.touchDistance(event.touches);
+      this.pinchStartZoom = this.zoom;
+      return;
+    }
+
+    if (event.touches.length === 1) {
+      const touch = event.touches[0];
+      this.panStartX = touch.clientX;
+      this.panStartY = touch.clientY;
+      this.panOriginX = this.panX;
+      this.panOriginY = this.panY;
+    }
+  },
+
+  onTouchMove(event) {
+    if (this.overlay.hidden) {
+      return;
+    }
+
+    event.preventDefault();
+    this.movedDuringTouch = true;
+
+    if (event.touches.length === 2) {
+      if (this.pinchStartDistance <= 0) {
+        this.pinchStartDistance = this.touchDistance(event.touches);
+        this.pinchStartZoom = this.zoom;
+      }
+      const distance = this.touchDistance(event.touches);
+      const nextZoom =
+        this.pinchStartZoom * (distance / this.pinchStartDistance);
+      this.setZoom(nextZoom);
+      return;
+    }
+
+    if (event.touches.length === 1 && this.zoom > this.MIN_ZOOM) {
+      const touch = event.touches[0];
+      this.panX = this.panOriginX + (touch.clientX - this.panStartX);
+      this.panY = this.panOriginY + (touch.clientY - this.panStartY);
+      this.applyTransform();
+    }
+  },
+
+  onTouchEnd(event) {
+    if (this.overlay.hidden) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (event.touches.length === 1) {
+      const touch = event.touches[0];
+      this.panStartX = touch.clientX;
+      this.panStartY = touch.clientY;
+      this.panOriginX = this.panX;
+      this.panOriginY = this.panY;
+      this.pinchStartDistance = 0;
+      this.activeTouches = 1;
+      return;
+    }
+
+    if (event.touches.length === 0) {
+      const wasPinchOrPan = this.activeTouches >= 2 || this.movedDuringTouch;
+      this.pinchStartDistance = 0;
+      this.activeTouches = 0;
+
+      if (!wasPinchOrPan && event.changedTouches.length === 1) {
+        this.handlePossibleDoubleTap(event.changedTouches[0]);
+      }
+    }
+  },
+
+  handlePossibleDoubleTap(touch) {
+    const now = Date.now();
+    const dt = now - this.lastTapTime;
+    const dx = touch.clientX - this.lastTapX;
+    const dy = touch.clientY - this.lastTapY;
+    const nearby = Math.hypot(dx, dy) < 40;
+
+    if (dt > 0 && dt < this.DOUBLE_TAP_MS && nearby) {
+      if (this.zoom > this.MIN_ZOOM + 0.05) {
+        this.resetView();
+      } else {
+        this.setZoom(this.DOUBLE_TAP_ZOOM);
+      }
+      this.lastTapTime = 0;
+      return;
+    }
+
+    this.lastTapTime = now;
+    this.lastTapX = touch.clientX;
+    this.lastTapY = touch.clientY;
+  },
+
   applyTransform() {
-    if (this.zoom <= this.MIN_ZOOM) {
+    if (this.zoom <= this.MIN_ZOOM + 0.001) {
+      this.zoom = this.MIN_ZOOM;
       this.panX = 0;
       this.panY = 0;
     }
 
     this.imgEl.style.transform =
-      "translate(" +
+      "translate3d(" +
       this.panX +
       "px, " +
       this.panY +
-      "px) scale(" +
+      "px, 0) scale(" +
       this.zoom +
       ")";
 
@@ -124,103 +284,13 @@ window.JapaPhotoViewer = {
     this.applyTransform();
   },
 
-  pointerDistance() {
-    const points = Array.from(this.pointers.values());
-    if (points.length < 2) {
-      return 0;
-    }
-    const dx = points[0].x - points[1].x;
-    const dy = points[0].y - points[1].y;
-    return Math.hypot(dx, dy);
-  },
-
-  onPointerDown(event) {
-    if (this.overlay.hidden) {
-      return;
-    }
-
-    this.stageEl.setPointerCapture(event.pointerId);
-    this.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-
-    if (this.pointers.size === 2) {
-      this.isPanning = false;
-      this.pinchStartDistance = this.pointerDistance();
-      this.pinchStartZoom = this.zoom;
-      event.preventDefault();
-      return;
-    }
-
-    if (this.pointers.size === 1 && this.zoom > this.MIN_ZOOM) {
-      this.isPanning = true;
-      this.panStartX = event.clientX;
-      this.panStartY = event.clientY;
-      this.panOriginX = this.panX;
-      this.panOriginY = this.panY;
-      event.preventDefault();
-    }
-  },
-
-  onPointerMove(event) {
-    if (!this.pointers.has(event.pointerId)) {
-      return;
-    }
-
-    this.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-
-    if (this.pointers.size === 2) {
-      event.preventDefault();
-      const distance = this.pointerDistance();
-      if (this.pinchStartDistance > 0) {
-        const nextZoom =
-          this.pinchStartZoom * (distance / this.pinchStartDistance);
-        this.setZoom(nextZoom);
-      }
-      return;
-    }
-
-    if (this.isPanning && this.pointers.size === 1 && this.zoom > this.MIN_ZOOM) {
-      event.preventDefault();
-      this.panX = this.panOriginX + (event.clientX - this.panStartX);
-      this.panY = this.panOriginY + (event.clientY - this.panStartY);
-      this.applyTransform();
-    }
-  },
-
-  onPointerUp(event) {
-    if (!this.pointers.has(event.pointerId)) {
-      return;
-    }
-
-    this.pointers.delete(event.pointerId);
-
-    try {
-      this.stageEl.releasePointerCapture(event.pointerId);
-    } catch (error) {
-      // Ignore if capture already released.
-    }
-
-    if (this.pointers.size === 1) {
-      const remaining = this.pointers.values().next().value;
-      this.isPanning = this.zoom > this.MIN_ZOOM;
-      this.panStartX = remaining.x;
-      this.panStartY = remaining.y;
-      this.panOriginX = this.panX;
-      this.panOriginY = this.panY;
-      this.pinchStartDistance = 0;
-      return;
-    }
-
-    if (this.pointers.size === 0) {
-      this.isPanning = false;
-      this.pinchStartDistance = 0;
-    }
-  },
-
   open(photo) {
     this.titleEl.textContent = photo.name;
     this.imgEl.src = photo.src;
     this.imgEl.alt = photo.name;
-    this.pointers.clear();
+    this.pinchStartDistance = 0;
+    this.activeTouches = 0;
+    this.mouseDragging = false;
     this.resetView();
     this.overlay.hidden = false;
     document.body.classList.add("is-photo-fullscreen");
@@ -230,7 +300,9 @@ window.JapaPhotoViewer = {
   close() {
     this.overlay.hidden = true;
     this.imgEl.removeAttribute("src");
-    this.pointers.clear();
+    this.pinchStartDistance = 0;
+    this.activeTouches = 0;
+    this.mouseDragging = false;
     this.resetView();
     document.body.classList.remove("is-photo-fullscreen");
   },
