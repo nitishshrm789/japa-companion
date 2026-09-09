@@ -1,0 +1,178 @@
+.personalities-help {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-sm);
+}
+
+.personalities-add-btn {
+  width: 100%;
+  margin-bottom: var(--space-md);
+}
+
+.personalities-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.personalities-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-md);
+}
+
+.personalities-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: var(--space-md);
+  width: 100%;
+  overflow: hidden;
+}
+
+.personalities-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.personalities-card__index {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.personalities-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.personalities-card__none {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.personalities-card__points {
+  margin: 0.15rem 0 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.personalities-card__points li {
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.personalities-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.personalities-action-btn {
+  min-height: 2rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.85rem;
+  font-weight: 650;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.personalities-action-btn--danger {
+  color: var(--color-delete);
+  border-color: var(--color-delete);
+}
+
+.personalities-form-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-page);
+  padding:
+    max(0.75rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+
+.personalities-form-screen[hidden] {
+  display: none;
+}
+
+.personalities-form-screen__bar {
+  margin-bottom: var(--space-sm);
+}
+
+.personalities-form-screen__back {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: 700;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.personalities-form-screen__form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 28rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.personalities-form-screen__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.personalities-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 650;
+  font-size: 0.9rem;
+}
+
+.personalities-field input,
+.personalities-field textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  resize: vertical;
+}
+
+.personalities-field textarea {
+  min-height: 12rem;
+  line-height: 1.45;
+}
+
+body.is-personalities-form-open {
+  overflow: hidden;
+}

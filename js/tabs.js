@@ -11,6 +11,7 @@ window.JapaTabs = {
     photos: "Photos",
     books: "Book Reading",
     hearing: "Hearing",
+    personalities: "Personalities",
   },
 
   init(options) {
@@ -26,6 +27,7 @@ window.JapaTabs = {
       photos: document.getElementById("panel-photos"),
       books: document.getElementById("panel-books"),
       hearing: document.getElementById("panel-hearing"),
+      personalities: document.getElementById("panel-personalities"),
     };
 
     const menu = document.getElementById("app-menu");

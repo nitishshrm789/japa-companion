@@ -247,6 +247,11 @@
       if (name === "hearing") {
         window.JapaHearingPanel.render(document.getElementById("hearing-root"));
       }
+      if (name === "personalities") {
+        window.JapaPersonalitiesPanel.render(
+          document.getElementById("personalities-root")
+        );
+      }
     },
   });
 
@@ -258,6 +263,9 @@
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));
     window.JapaBookPanel.render(document.getElementById("books-root"));
     window.JapaHearingPanel.render(document.getElementById("hearing-root"));
+    window.JapaPersonalitiesPanel.render(
+      document.getElementById("personalities-root")
+    );
     refreshResults();
   } catch (error) {
     console.error("Panels failed to load:", error);

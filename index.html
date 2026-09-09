@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/results.css?v=3" />
     <link rel="stylesheet" href="css/book-reading.css?v=3" />
     <link rel="stylesheet" href="css/hearing.css?v=3" />
+    <link rel="stylesheet" href="css/personalities.css?v=1" />
   </head>
   <body>
     <main class="app">
@@ -306,6 +307,16 @@
       >
         <div id="hearing-root" class="hearing-root"></div>
       </section>
+
+      <section
+        id="panel-personalities"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-personalities"
+        hidden
+      >
+        <div id="personalities-root" class="personalities-root"></div>
+      </section>
     </main>
 
     <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true"></div>
@@ -424,6 +435,19 @@
             data-tab="hearing"
           >
             Hearing
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-personalities"
+            aria-controls="panel-personalities"
+            aria-selected="false"
+            data-tab="personalities"
+          >
+            Personalities
           </button>
         </li>
       </ul>
@@ -562,9 +586,11 @@
     <script src="js/book-reading-panel.js?v=3"></script>
     <script src="js/hearing-store.js?v=4"></script>
     <script src="js/hearing-panel.js?v=3"></script>
+    <script src="js/personalities-store.js?v=1"></script>
+    <script src="js/personalities-panel.js?v=1"></script>
     <script src="js/results-panel.js?v=3"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=3"></script>
-    <script src="js/app.js?v=3"></script>
+    <script src="js/tabs.js?v=5"></script>
+    <script src="js/app.js?v=5"></script>
   </body>
 </html>
