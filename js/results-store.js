@@ -1,5 +1,6 @@
 /**
  * Rolling 7-day daily japa results (one entry per calendar date).
+ * Stores main rounds (1-16) and optional extra rounds (17+).
  */
 window.JapaResultsStore = {
   KEY: "japa-chanting-results-v1",
@@ -21,7 +22,8 @@ window.JapaResultsStore = {
             day &&
             typeof day.dateKey === "string" &&
             Array.isArray(day.rounds) &&
-            day.rounds.length > 0
+            (day.rounds.length > 0 ||
+              (Array.isArray(day.extraRounds) && day.extraRounds.length > 0))
           );
         })
         .sort(function (a, b) {
@@ -35,7 +37,10 @@ window.JapaResultsStore = {
 
   saveAll(days) {
     try {
-      localStorage.setItem(this.KEY, JSON.stringify(days.slice(0, this.MAX_DAYS)));
+      localStorage.setItem(
+        this.KEY,
+        JSON.stringify(days.slice(0, this.MAX_DAYS))
+      );
     } catch (error) {
       // Ignore quota / private-mode write failures.
     }
@@ -44,18 +49,26 @@ window.JapaResultsStore = {
   /**
    * Save or replace today's day. Keeps only the newest 7 dates.
    */
-  upsertToday(rounds) {
-    if (!rounds || rounds.length === 0) {
+  upsertToday(mainRounds, extraRounds) {
+    const main = Array.isArray(mainRounds) ? mainRounds : [];
+    const extra = Array.isArray(extraRounds) ? extraRounds : [];
+
+    if (main.length === 0 && extra.length === 0) {
       return { ok: false, reason: "empty" };
     }
 
     const dateKey = window.JapaTime.getLocalDateKey();
+    const allForTotal = main.concat(extra);
     const snapshot = {
       dateKey: dateKey,
       savedAt: Date.now(),
-      roundCount: rounds.length,
-      totalMs: window.JapaTime.sumElapsed(rounds),
-      rounds: rounds.map(function (round) {
+      roundCount: main.length,
+      extraCount: extra.length,
+      totalMs: window.JapaTime.sumElapsed(allForTotal),
+      rounds: main.map(function (round) {
+        return { elapsedMs: round.elapsedMs };
+      }),
+      extraRounds: extra.map(function (round) {
         return { elapsedMs: round.elapsedMs };
       }),
     };

@@ -46,6 +46,18 @@
   font-variant-numeric: tabular-nums;
 }
 
+.result-day__divider {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed #ddd6cb;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  list-style: none;
+}
+
 .timer-fullscreen {
   position: fixed;
   inset: 0;

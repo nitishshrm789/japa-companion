@@ -1,16 +1,23 @@
 /**
- * Manages round history: add, remove, and renumber after cancel.
- * Hard cap: 16 rounds (one full set of japa rounds).
+ * Round history list with optional start number and max count.
+ * Clock: start 1, max 16. Extra Rounds: start 17, no max.
  */
 window.JapaRounds = {
   MAX_ROUNDS: 16,
+  EXTRA_START: 17,
 
-  create(listElement, emptyElement, onChange) {
+  create(listElement, emptyElement, onChange, options) {
+    const settings = options || {};
+    const startNumber =
+      typeof settings.startNumber === "number" ? settings.startNumber : 1;
+    const maxRounds =
+      typeof settings.maxRounds === "number" ? settings.maxRounds : Infinity;
+
     /** @type {{ id: string, elapsedMs: number }[]} */
     let rounds = [];
 
     function createId() {
-      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      return Date.now() + "-" + Math.random().toString(16).slice(2);
     }
 
     function notify() {
@@ -26,8 +33,8 @@ window.JapaRounds = {
     function render() {
       listElement.replaceChildren();
 
-      rounds.forEach((round, index) => {
-        const roundNumber = index + 1;
+      rounds.forEach(function (round, index) {
+        const roundNumber = startNumber + index;
         const item = document.createElement("li");
         item.className = "round-item";
         item.dataset.roundId = round.id;
@@ -42,9 +49,9 @@ window.JapaRounds = {
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
         deleteBtn.className = "round-item__delete";
-        deleteBtn.setAttribute("aria-label", `Cancel round ${roundNumber}`);
+        deleteBtn.setAttribute("aria-label", "Cancel round " + roundNumber);
         deleteBtn.textContent = "X";
-        deleteBtn.addEventListener("click", () => {
+        deleteBtn.addEventListener("click", function () {
           removeRound(round.id);
         });
 
@@ -61,7 +68,7 @@ window.JapaRounds = {
     }
 
     function canAddRound() {
-      return rounds.length < window.JapaRounds.MAX_ROUNDS;
+      return rounds.length < maxRounds;
     }
 
     function addRound(elapsedMs) {
@@ -71,19 +78,24 @@ window.JapaRounds = {
 
       rounds.push({
         id: createId(),
-        elapsedMs,
+        elapsedMs: elapsedMs,
       });
       render();
       return true;
     }
 
     function removeRound(id) {
-      rounds = rounds.filter((round) => round.id !== id);
+      rounds = rounds.filter(function (round) {
+        return round.id !== id;
+      });
       render();
     }
 
     function setRounds(nextRounds) {
       rounds = Array.isArray(nextRounds) ? nextRounds.slice() : [];
+      if (Number.isFinite(maxRounds)) {
+        rounds = rounds.slice(0, maxRounds);
+      }
       render();
     }
 
@@ -100,13 +112,14 @@ window.JapaRounds = {
     notify();
 
     return {
-      addRound,
-      removeRound,
-      setRounds,
-      clearRounds,
-      getRounds,
-      getCount,
-      canAddRound,
+      addRound: addRound,
+      removeRound: removeRound,
+      setRounds: setRounds,
+      clearRounds: clearRounds,
+      getRounds: getRounds,
+      getCount: getCount,
+      canAddRound: canAddRound,
+      startNumber: startNumber,
     };
   },
 };

@@ -1,5 +1,5 @@
 /**
- * Saves / loads japa session on this device (survives leaving the page).
+ * Saves / loads main + extra japa sessions on this device.
  */
 window.JapaSessionStore = {
   KEY: "japa-chanting-session-v1",
@@ -16,8 +16,8 @@ window.JapaSessionStore = {
         return null;
       }
 
-      return {
-        rounds: data.rounds
+      function cleanRounds(list, max) {
+        const cleaned = (list || [])
           .filter(function (round) {
             return (
               round &&
@@ -25,11 +25,20 @@ window.JapaSessionStore = {
               typeof round.elapsedMs === "number" &&
               round.elapsedMs > 0
             );
-          })
-          .slice(0, window.JapaRounds.MAX_ROUNDS),
+          });
+        return typeof max === "number" ? cleaned.slice(0, max) : cleaned;
+      }
+
+      return {
+        rounds: cleanRounds(data.rounds, window.JapaRounds.MAX_ROUNDS),
         currentElapsedMs:
           typeof data.currentElapsedMs === "number" && data.currentElapsedMs > 0
             ? data.currentElapsedMs
+            : 0,
+        extraRounds: cleanRounds(data.extraRounds),
+        extraElapsedMs:
+          typeof data.extraElapsedMs === "number" && data.extraElapsedMs > 0
+            ? data.extraElapsedMs
             : 0,
       };
     } catch (error) {
@@ -37,13 +46,15 @@ window.JapaSessionStore = {
     }
   },
 
-  save(rounds, currentElapsedMs) {
+  save(payload) {
     try {
       localStorage.setItem(
         this.KEY,
         JSON.stringify({
-          rounds: rounds,
-          currentElapsedMs: Math.max(0, currentElapsedMs || 0),
+          rounds: payload.rounds || [],
+          currentElapsedMs: Math.max(0, payload.currentElapsedMs || 0),
+          extraRounds: payload.extraRounds || [],
+          extraElapsedMs: Math.max(0, payload.extraElapsedMs || 0),
           updatedAt: Date.now(),
         })
       );

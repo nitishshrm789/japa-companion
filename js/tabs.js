@@ -1,5 +1,5 @@
 /**
- * Tab navigation: Clock | Result | Read this | Hare Krsna MM | Photos
+ * Tab navigation including Extra Rounds.
  */
 window.JapaTabs = {
   init(options) {
@@ -8,6 +8,7 @@ window.JapaTabs = {
     );
     const panels = {
       clock: document.getElementById("panel-clock"),
+      extra: document.getElementById("panel-extra"),
       result: document.getElementById("panel-result"),
       read: document.getElementById("panel-read"),
       mm: document.getElementById("panel-mm"),
@@ -25,6 +26,9 @@ window.JapaTabs = {
 
       Object.keys(panels).forEach(function (key) {
         const panel = panels[key];
+        if (!panel) {
+          return;
+        }
         const show = key === name;
         panel.classList.toggle("is-active", show);
         panel.hidden = !show;

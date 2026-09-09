@@ -22,6 +22,7 @@ window.JapaReadViewer = {
     this.titleEl.textContent = item.title;
     this.contentEl.replaceChildren();
     this.bodyEl.classList.toggle("read-fullscreen__body--mm", item.kind === "mm");
+    this.overlay.classList.toggle("read-fullscreen--mm", item.kind === "mm");
     this.titleEl.hidden = item.kind === "mm";
 
     if (item.kind === "mm") {
@@ -67,6 +68,7 @@ window.JapaReadViewer = {
     this.overlay.hidden = true;
     this.titleEl.hidden = false;
     this.bodyEl.classList.remove("read-fullscreen__body--mm");
+    this.overlay.classList.remove("read-fullscreen--mm");
     document.body.classList.remove("is-reading-fullscreen");
   },
 };

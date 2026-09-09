@@ -43,6 +43,17 @@
           type="button"
           class="tabs__btn"
           role="tab"
+          id="tab-extra"
+          aria-controls="panel-extra"
+          aria-selected="false"
+          data-tab="extra"
+        >
+          Extra Rounds
+        </button>
+        <button
+          type="button"
+          class="tabs__btn"
+          role="tab"
           id="tab-result"
           aria-controls="panel-result"
           aria-selected="false"
@@ -173,7 +184,101 @@
             Save Day
           </button>
           <p class="clock-save-note">
-            Saves today's rounds to Result (updates same date, keeps 7 days).
+            Saves today's Clock + Extra Rounds to Result (same date updates, keeps
+            7 days).
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="panel-extra"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-extra"
+        hidden
+      >
+        <section
+          id="extra-timer-panel"
+          class="timer-panel is-tappable"
+          aria-label="Extra rounds stopwatch. Tap for full screen."
+          tabindex="0"
+        >
+          <div
+            id="extra-timer-display"
+            class="timer-display"
+            role="timer"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            00:00
+          </div>
+          <p id="extra-round-progress" class="round-progress" aria-live="polite">
+            Extra rounds: 0
+          </p>
+          <p class="timer-panel__tap-hint">Tap for full screen · from Round 17+</p>
+        </section>
+
+        <section class="controls" aria-label="Extra timer controls">
+          <button
+            type="button"
+            id="btn-extra-start"
+            class="btn btn--start"
+            aria-label="Start extra stopwatch"
+          >
+            Start
+          </button>
+          <button
+            type="button"
+            id="btn-extra-stop"
+            class="btn btn--stop"
+            aria-label="Stop extra stopwatch"
+          >
+            Stop
+          </button>
+          <button
+            type="button"
+            id="btn-extra-reset"
+            class="btn btn--reset"
+            aria-label="Save extra round and start next"
+          >
+            Reset
+          </button>
+        </section>
+
+        <section
+          id="extra-rounds-panel"
+          class="rounds-panel is-tappable"
+          aria-label="Extra rounds list. Tap for full screen timer."
+          tabindex="0"
+        >
+          <div class="rounds-panel__top">
+            <h2 class="rounds-panel__heading">Extra rounds (17+)</h2>
+            <button
+              type="button"
+              id="btn-extra-clear"
+              class="btn-clear-session"
+              aria-label="Clear extra rounds session"
+            >
+              Clear
+            </button>
+          </div>
+          <ul id="extra-rounds-list" class="rounds-list"></ul>
+          <p id="extra-rounds-empty" class="rounds-empty">
+            No extra rounds yet. Use this after finishing 16 on Clock.
+          </p>
+        </section>
+
+        <div class="clock-save-wrap">
+          <button
+            type="button"
+            id="btn-extra-save-day"
+            class="btn btn--save-day"
+            aria-label="Save today's Clock and Extra rounds to Result"
+          >
+            Save Day
+          </button>
+          <p class="clock-save-note">
+            Saves Clock rounds (1–16) and Extra rounds (17+) together for today.
           </p>
         </div>
       </section>
