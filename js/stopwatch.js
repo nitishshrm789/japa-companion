@@ -1,5 +1,6 @@
 /**
- * Pure stopwatch: tracks elapsed time with start / stop / reset.
+ * Pure stopwatch: wall-clock timing so background / lock screen
+ * does not freeze elapsed time (rAF only drives the display).
  */
 window.JapaStopwatch = {
   create(onTick) {
@@ -9,11 +10,11 @@ window.JapaStopwatch = {
     let frameId = null;
 
     function now() {
-      return performance.now();
+      return Date.now();
     }
 
     function currentElapsed() {
-      if (!running) {
+      if (!running || !startedAt) {
         return accumulatedMs;
       }
       return accumulatedMs + (now() - startedAt);
@@ -23,8 +24,22 @@ window.JapaStopwatch = {
       onTick(currentElapsed());
     }
 
+    function clearFrame() {
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+    }
+
     function tick() {
       emit();
+      frameId = requestAnimationFrame(tick);
+    }
+
+    function startDisplay() {
+      if (frameId !== null || !running) {
+        return;
+      }
       frameId = requestAnimationFrame(tick);
     }
 
@@ -34,7 +49,7 @@ window.JapaStopwatch = {
       }
       running = true;
       startedAt = now();
-      frameId = requestAnimationFrame(tick);
+      startDisplay();
       emit();
     }
 
@@ -44,10 +59,8 @@ window.JapaStopwatch = {
       }
       accumulatedMs = currentElapsed();
       running = false;
-      if (frameId !== null) {
-        cancelAnimationFrame(frameId);
-        frameId = null;
-      }
+      startedAt = 0;
+      clearFrame();
       emit();
     }
 
@@ -56,10 +69,7 @@ window.JapaStopwatch = {
       running = false;
       accumulatedMs = 0;
       startedAt = 0;
-      if (frameId !== null) {
-        cancelAnimationFrame(frameId);
-        frameId = null;
-      }
+      clearFrame();
       emit();
       return elapsed;
     }
@@ -72,6 +82,14 @@ window.JapaStopwatch = {
       return running;
     }
 
+    function getStartedAt() {
+      return running ? startedAt : 0;
+    }
+
+    function getAccumulatedMs() {
+      return accumulatedMs;
+    }
+
     /**
      * Restore a paused elapsed time (e.g. after returning from other work).
      */
@@ -79,11 +97,35 @@ window.JapaStopwatch = {
       running = false;
       accumulatedMs = Math.max(0, ms || 0);
       startedAt = 0;
-      if (frameId !== null) {
-        cancelAnimationFrame(frameId);
-        frameId = null;
-      }
+      clearFrame();
       emit();
+    }
+
+    /**
+     * Continue a run that was already in progress (survives tab close / lock).
+     */
+    function restoreRunning(baseMs, startedAtWall) {
+      accumulatedMs = Math.max(0, baseMs || 0);
+      startedAt =
+        typeof startedAtWall === "number" && startedAtWall > 0
+          ? startedAtWall
+          : now();
+      running = true;
+      startDisplay();
+      emit();
+    }
+
+    /** Pause display loop only — keep counting via wall clock. */
+    function suspendDisplay() {
+      clearFrame();
+    }
+
+    /** Resume display loop if still running. */
+    function resumeDisplay() {
+      if (running) {
+        emit();
+        startDisplay();
+      }
     }
 
     return {
@@ -93,6 +135,11 @@ window.JapaStopwatch = {
       getElapsed,
       isRunning,
       setElapsed,
+      restoreRunning,
+      getStartedAt,
+      getAccumulatedMs,
+      suspendDisplay,
+      resumeDisplay,
     };
   },
 };

@@ -43,9 +43,17 @@
     }
     window.JapaSessionStore.save({
       rounds: roundsList.getRounds(),
-      currentElapsedMs: stopwatch.getElapsed(),
+      currentElapsedMs: stopwatch.isRunning()
+        ? stopwatch.getAccumulatedMs()
+        : stopwatch.getElapsed(),
+      mainRunning: stopwatch.isRunning(),
+      mainStartedAt: stopwatch.getStartedAt(),
       extraRounds: extraRoundsList.getRounds(),
-      extraElapsedMs: extraStopwatch.getElapsed(),
+      extraElapsedMs: extraStopwatch.isRunning()
+        ? extraStopwatch.getAccumulatedMs()
+        : extraStopwatch.getElapsed(),
+      extraRunning: extraStopwatch.isRunning(),
+      extraStartedAt: extraStopwatch.getStartedAt(),
     });
   }
 
@@ -224,9 +232,20 @@
   const saved = window.JapaSessionStore.load();
   if (saved) {
     roundsList.setRounds(saved.rounds);
-    stopwatch.setElapsed(saved.currentElapsedMs);
+    if (saved.mainRunning && saved.mainStartedAt) {
+      stopwatch.restoreRunning(saved.currentElapsedMs, saved.mainStartedAt);
+    } else {
+      stopwatch.setElapsed(saved.currentElapsedMs);
+    }
     extraRoundsList.setRounds(saved.extraRounds || []);
-    extraStopwatch.setElapsed(saved.extraElapsedMs || 0);
+    if (saved.extraRunning && saved.extraStartedAt) {
+      extraStopwatch.restoreRunning(
+        saved.extraElapsedMs || 0,
+        saved.extraStartedAt
+      );
+    } else {
+      extraStopwatch.setElapsed(saved.extraElapsedMs || 0);
+    }
   }
 
   sessionReady = true;
@@ -331,16 +350,19 @@
     persistSession();
   });
 
-  function pauseAllAndSave() {
-    pauseMain();
-    pauseExtra();
-  }
-
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "hidden") {
-      pauseAllAndSave();
+      stopwatch.suspendDisplay();
+      extraStopwatch.suspendDisplay();
+      persistSession();
+      return;
     }
+    stopwatch.resumeDisplay();
+    extraStopwatch.resumeDisplay();
+    persistSession();
   });
 
-  window.addEventListener("pagehide", pauseAllAndSave);
+  window.addEventListener("pagehide", function () {
+    persistSession();
+  });
 })();
