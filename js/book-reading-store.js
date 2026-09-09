@@ -2,17 +2,17 @@
  * Persists Srila Prabhupada book-reading bookmarks on this device.
  */
 window.JapaBookStore = {
-  KEY: "japa-book-reading-v1",
+  KEY: "japa-book-reading-v2",
 
   load() {
     try {
       const raw = localStorage.getItem(this.KEY);
       if (!raw) {
-        return this.defaultEntries();
+        return [];
       }
       const data = JSON.parse(raw);
       if (!Array.isArray(data)) {
-        return this.defaultEntries();
+        return [];
       }
       return data
         .filter(function (entry) {
@@ -32,29 +32,8 @@ window.JapaBookStore = {
           return a.order - b.order;
         });
     } catch (error) {
-      return this.defaultEntries();
+      return [];
     }
-  },
-
-  defaultEntries() {
-    return [
-      {
-        id: "book-1",
-        order: 1,
-        bookName: "SP Lilamrita",
-        chapter: '4: "How Shall I Serve You?"',
-        link: "https://vedabase.io/en/library/spl/1/4/",
-        para: "This transcendental knowledge, Abhay explained",
-      },
-      {
-        id: "book-2",
-        order: 2,
-        bookName: "Bhagavad-gita As It Is",
-        chapter: '6: "Dhyana-yoga" Text 7',
-        link: "https://vedabase.io/en/library/bg/6/7/",
-        para: "Actually, every living entity is intended",
-      },
-    ];
   },
 
   save(entries) {
