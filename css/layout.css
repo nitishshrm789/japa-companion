@@ -17,15 +17,16 @@
 }
 
 .app__topbar {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: center;
+  min-height: 3.5rem;
 }
 
 .app__brand {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
+  width: 100%;
+  text-align: center;
 }
 
 .app__mantra {
