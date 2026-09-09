@@ -13,22 +13,34 @@
 }
 
 .app__header {
-  text-align: center;
   padding-top: var(--space-sm);
 }
 
+.app__topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app__brand {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
 .app__mantra {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   color: var(--color-muted);
   text-transform: uppercase;
 }
 
 .app__title {
-  margin-top: var(--space-xs);
+  margin-top: 0.15rem;
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+  font-size: clamp(1.2rem, 4.2vw, 1.55rem);
   font-weight: 700;
+  line-height: 1.15;
 }
 
 .controls {

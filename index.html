@@ -25,99 +25,151 @@
   <body>
     <main class="app">
       <header class="app__header">
-        <p class="app__mantra">Hare Krishna Maha-Mantra</p>
-        <h1 class="app__title">Japa Companion</h1>
+        <div class="app__topbar">
+          <button
+            type="button"
+            id="menu-toggle"
+            class="menu-toggle"
+            aria-label="Open menu"
+            aria-controls="app-menu"
+            aria-expanded="false"
+          >
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+            <span class="menu-toggle__bar" aria-hidden="true"></span>
+          </button>
+          <div class="app__brand">
+            <p class="app__mantra">Hare Krishna Maha-Mantra</p>
+            <h1 class="app__title">Japa Companion</h1>
+          </div>
+        </div>
+        <p id="section-label" class="app__section-label">Clock</p>
       </header>
 
-      <nav class="tabs" role="tablist" aria-label="Main sections">
-        <button
-          type="button"
-          class="tabs__btn is-active"
-          role="tab"
-          id="tab-clock"
-          aria-controls="panel-clock"
-          aria-selected="true"
-          data-tab="clock"
-        >
-          Clock
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-extra"
-          aria-controls="panel-extra"
-          aria-selected="false"
-          data-tab="extra"
-        >
-          Extra Rounds
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-result"
-          aria-controls="panel-result"
-          aria-selected="false"
-          data-tab="result"
-        >
-          Result
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-read"
-          aria-controls="panel-read"
-          aria-selected="false"
-          data-tab="read"
-        >
-          Read this
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-mm"
-          aria-controls="panel-mm"
-          aria-selected="false"
-          data-tab="mm"
-        >
-          Hare Krsna MM
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-photos"
-          aria-controls="panel-photos"
-          aria-selected="false"
-          data-tab="photos"
-        >
-          Photos
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-books"
-          aria-controls="panel-books"
-          aria-selected="false"
-          data-tab="books"
-        >
-          Book Reading
-        </button>
-        <button
-          type="button"
-          class="tabs__btn"
-          role="tab"
-          id="tab-hearing"
-          aria-controls="panel-hearing"
-          aria-selected="false"
-          data-tab="hearing"
-        >
-          Hearing
-        </button>
+      <div id="menu-backdrop" class="menu-backdrop" hidden></div>
+      <nav
+        id="app-menu"
+        class="app-menu"
+        hidden
+        aria-label="Main sections"
+      >
+        <div class="app-menu__head">
+          <h2 class="app-menu__title">Menu</h2>
+          <button
+            type="button"
+            id="menu-close"
+            class="app-menu__close"
+            aria-label="Close menu"
+          >
+            Close
+          </button>
+        </div>
+        <ul class="app-menu__list" role="tablist">
+          <li>
+            <button
+              type="button"
+              class="app-menu__item is-active"
+              role="tab"
+              id="tab-clock"
+              aria-controls="panel-clock"
+              aria-selected="true"
+              data-tab="clock"
+            >
+              Clock
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-extra"
+              aria-controls="panel-extra"
+              aria-selected="false"
+              data-tab="extra"
+            >
+              Extra Rounds
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-result"
+              aria-controls="panel-result"
+              aria-selected="false"
+              data-tab="result"
+            >
+              Result
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-read"
+              aria-controls="panel-read"
+              aria-selected="false"
+              data-tab="read"
+            >
+              Read this
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-mm"
+              aria-controls="panel-mm"
+              aria-selected="false"
+              data-tab="mm"
+            >
+              Hare Krsna MM
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-photos"
+              aria-controls="panel-photos"
+              aria-selected="false"
+              data-tab="photos"
+            >
+              Photos
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-books"
+              aria-controls="panel-books"
+              aria-selected="false"
+              data-tab="books"
+            >
+              Book Reading
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="app-menu__item"
+              role="tab"
+              id="tab-hearing"
+              aria-controls="panel-hearing"
+              aria-selected="false"
+              data-tab="hearing"
+            >
+              Hearing
+            </button>
+          </li>
+        </ul>
       </nav>
 
       <section

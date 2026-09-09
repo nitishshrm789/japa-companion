@@ -1,7 +1,18 @@
 /**
- * Tab navigation including Extra Rounds.
+ * Hamburger menu + section panels.
  */
 window.JapaTabs = {
+  LABELS: {
+    clock: "Clock",
+    extra: "Extra Rounds",
+    result: "Result",
+    read: "Read this",
+    mm: "Hare Krsna MM",
+    photos: "Photos",
+    books: "Book Reading",
+    hearing: "Hearing",
+  },
+
   init(options) {
     const buttons = Array.prototype.slice.call(
       document.querySelectorAll("[data-tab]")
@@ -16,6 +27,26 @@ window.JapaTabs = {
       books: document.getElementById("panel-books"),
       hearing: document.getElementById("panel-hearing"),
     };
+
+    const menu = document.getElementById("app-menu");
+    const backdrop = document.getElementById("menu-backdrop");
+    const menuToggle = document.getElementById("menu-toggle");
+    const menuClose = document.getElementById("menu-close");
+    const sectionLabel = document.getElementById("section-label");
+
+    function openMenu() {
+      menu.hidden = false;
+      backdrop.hidden = false;
+      document.body.classList.add("is-menu-open");
+      menuToggle.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMenu() {
+      menu.hidden = true;
+      backdrop.hidden = true;
+      document.body.classList.remove("is-menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
 
     function activate(tabName) {
       const name = panels[tabName] ? tabName : "clock";
@@ -36,10 +67,15 @@ window.JapaTabs = {
         panel.hidden = !show;
       });
 
+      if (sectionLabel) {
+        sectionLabel.textContent = window.JapaTabs.LABELS[name] || name;
+      }
+
       if (typeof options.onChange === "function") {
         options.onChange(name);
       }
 
+      closeMenu();
       window.scrollTo(0, 0);
     }
 
@@ -49,8 +85,25 @@ window.JapaTabs = {
       });
     });
 
+    menuToggle.addEventListener("click", function () {
+      if (menu.hidden) {
+        openMenu();
+      } else {
+        closeMenu();
+      }
+    });
+
+    menuClose.addEventListener("click", closeMenu);
+    backdrop.addEventListener("click", closeMenu);
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !menu.hidden) {
+        closeMenu();
+      }
+    });
+
     activate(options.initialTab || "clock");
 
-    return { activate: activate };
+    return { activate: activate, openMenu: openMenu, closeMenu: closeMenu };
   },
 };
