@@ -8,27 +8,44 @@
   display: flex;
 }
 
+.app__topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app__brand {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
 .menu-toggle {
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.32rem;
+  gap: 0.4rem;
   border: 2px solid var(--color-border);
-  border-radius: 0.55rem;
+  border-radius: 0.65rem;
   background: var(--color-surface);
   padding: 0;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  position: relative;
+  z-index: 5;
 }
 
 .menu-toggle__bar {
   display: block;
-  width: 1.15rem;
-  height: 2px;
+  width: 1.55rem;
+  height: 3.5px;
   background: var(--color-ink);
   border-radius: 999px;
 }
@@ -36,7 +53,7 @@
 .app__section-label {
   margin-top: var(--space-sm);
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-muted);
 }
@@ -44,37 +61,48 @@
 .menu-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 90;
-  background: rgba(26, 26, 26, 0.45);
+  z-index: 200;
+  background: rgba(26, 26, 26, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
 }
 
-.menu-backdrop[hidden] {
-  display: none;
+.menu-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .app-menu {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
-  width: min(18.5rem, 86vw);
+  z-index: 210;
+  width: min(20rem, 88vw);
+  height: 100%;
   height: 100dvh;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   padding:
-    max(var(--space-md), env(safe-area-inset-top))
-    var(--space-md)
-    max(var(--space-md), env(safe-area-inset-bottom));
+    max(1rem, env(safe-area-inset-top))
+    1rem
+    max(1rem, env(safe-area-inset-bottom));
   background: #fffaf3;
   border-right: 2px solid var(--color-border);
-  box-shadow: 8px 0 28px rgba(26, 26, 26, 0.16);
+  box-shadow: 8px 0 28px rgba(26, 26, 26, 0.18);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  transform: translateX(-105%);
+  transition: transform 0.2s ease;
+  pointer-events: none;
 }
 
-.app-menu[hidden] {
-  display: none;
+.app-menu.is-open {
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .app-menu__head {
@@ -86,19 +114,19 @@
 }
 
 .app-menu__title {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
 .app-menu__close {
-  min-height: 2.2rem;
-  padding: 0.3rem 0.75rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-btn);
   background: var(--color-surface);
   color: var(--color-ink);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -109,19 +137,19 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .app-menu__item {
   width: 100%;
-  min-height: 2.75rem;
-  padding: 0.65rem 0.85rem;
+  min-height: 3rem;
+  padding: 0.75rem 0.9rem;
   border: 2px solid var(--color-border);
   border-radius: 0.65rem;
   background: var(--color-surface);
   color: var(--color-ink);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-align: left;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;

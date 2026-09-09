@@ -34,21 +34,27 @@ window.JapaTabs = {
     const menuClose = document.getElementById("menu-close");
     const sectionLabel = document.getElementById("section-label");
 
+    function isMenuOpen() {
+      return menu.classList.contains("is-open");
+    }
+
     function openMenu() {
-      menu.hidden = false;
-      backdrop.hidden = false;
+      menu.classList.add("is-open");
+      backdrop.classList.add("is-open");
       document.body.classList.add("is-menu-open");
       menuToggle.setAttribute("aria-expanded", "true");
+      menuToggle.setAttribute("aria-label", "Close menu");
     }
 
     function closeMenu() {
-      menu.hidden = true;
-      backdrop.hidden = true;
+      menu.classList.remove("is-open");
+      backdrop.classList.remove("is-open");
       document.body.classList.remove("is-menu-open");
       menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open menu");
     }
 
-    function activate(tabName) {
+    function activate(tabName, fromMenu) {
       const name = panels[tabName] ? tabName : "clock";
 
       buttons.forEach(function (btn) {
@@ -75,34 +81,50 @@ window.JapaTabs = {
         options.onChange(name);
       }
 
-      closeMenu();
+      if (fromMenu !== false) {
+        closeMenu();
+      }
+
       window.scrollTo(0, 0);
     }
 
     buttons.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        activate(btn.getAttribute("data-tab"));
+      btn.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        activate(btn.getAttribute("data-tab"), true);
       });
     });
 
-    menuToggle.addEventListener("click", function () {
-      if (menu.hidden) {
-        openMenu();
-      } else {
+    menuToggle.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (isMenuOpen()) {
         closeMenu();
+      } else {
+        openMenu();
       }
     });
 
-    menuClose.addEventListener("click", closeMenu);
-    backdrop.addEventListener("click", closeMenu);
+    menuClose.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeMenu();
+    });
+
+    backdrop.addEventListener("click", function () {
+      closeMenu();
+    });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !menu.hidden) {
+      if (event.key === "Escape" && isMenuOpen()) {
         closeMenu();
       }
     });
 
-    activate(options.initialTab || "clock");
+    // First load: show Clock, keep menu closed.
+    activate(options.initialTab || "clock", false);
+    closeMenu();
 
     return { activate: activate, openMenu: openMenu, closeMenu: closeMenu };
   },

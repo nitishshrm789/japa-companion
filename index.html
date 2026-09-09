@@ -11,16 +11,16 @@
       content="Japa stopwatch and inspirational readings for Hare Krishna maha-mantra chanting"
     />
     <title>Japa Companion</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/tabs.css" />
-    <link rel="stylesheet" href="css/boxes.css" />
-    <link rel="stylesheet" href="css/read.css" />
-    <link rel="stylesheet" href="css/photos.css" />
-    <link rel="stylesheet" href="css/results.css" />
-    <link rel="stylesheet" href="css/book-reading.css" />
-    <link rel="stylesheet" href="css/hearing.css" />
+    <link rel="stylesheet" href="css/base.css?v=3" />
+    <link rel="stylesheet" href="css/layout.css?v=3" />
+    <link rel="stylesheet" href="css/components.css?v=3" />
+    <link rel="stylesheet" href="css/tabs.css?v=3" />
+    <link rel="stylesheet" href="css/boxes.css?v=3" />
+    <link rel="stylesheet" href="css/read.css?v=3" />
+    <link rel="stylesheet" href="css/photos.css?v=3" />
+    <link rel="stylesheet" href="css/results.css?v=3" />
+    <link rel="stylesheet" href="css/book-reading.css?v=3" />
+    <link rel="stylesheet" href="css/hearing.css?v=3" />
   </head>
   <body>
     <main class="app">
@@ -45,132 +45,6 @@
         </div>
         <p id="section-label" class="app__section-label">Clock</p>
       </header>
-
-      <div id="menu-backdrop" class="menu-backdrop" hidden></div>
-      <nav
-        id="app-menu"
-        class="app-menu"
-        hidden
-        aria-label="Main sections"
-      >
-        <div class="app-menu__head">
-          <h2 class="app-menu__title">Menu</h2>
-          <button
-            type="button"
-            id="menu-close"
-            class="app-menu__close"
-            aria-label="Close menu"
-          >
-            Close
-          </button>
-        </div>
-        <ul class="app-menu__list" role="tablist">
-          <li>
-            <button
-              type="button"
-              class="app-menu__item is-active"
-              role="tab"
-              id="tab-clock"
-              aria-controls="panel-clock"
-              aria-selected="true"
-              data-tab="clock"
-            >
-              Clock
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-extra"
-              aria-controls="panel-extra"
-              aria-selected="false"
-              data-tab="extra"
-            >
-              Extra Rounds
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-result"
-              aria-controls="panel-result"
-              aria-selected="false"
-              data-tab="result"
-            >
-              Result
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-read"
-              aria-controls="panel-read"
-              aria-selected="false"
-              data-tab="read"
-            >
-              Read this
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-mm"
-              aria-controls="panel-mm"
-              aria-selected="false"
-              data-tab="mm"
-            >
-              Hare Krsna MM
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-photos"
-              aria-controls="panel-photos"
-              aria-selected="false"
-              data-tab="photos"
-            >
-              Photos
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-books"
-              aria-controls="panel-books"
-              aria-selected="false"
-              data-tab="books"
-            >
-              Book Reading
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="app-menu__item"
-              role="tab"
-              id="tab-hearing"
-              aria-controls="panel-hearing"
-              aria-selected="false"
-              data-tab="hearing"
-            >
-              Hearing
-            </button>
-          </li>
-        </ul>
-      </nav>
 
       <section
         id="panel-clock"
@@ -433,6 +307,127 @@
       </section>
     </main>
 
+    <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true"></div>
+    <nav id="app-menu" class="app-menu" aria-label="Main sections">
+      <div class="app-menu__head">
+        <h2 class="app-menu__title">Menu</h2>
+        <button
+          type="button"
+          id="menu-close"
+          class="app-menu__close"
+          aria-label="Close menu"
+        >
+          Close
+        </button>
+      </div>
+      <ul class="app-menu__list" role="tablist">
+        <li>
+          <button
+            type="button"
+            class="app-menu__item is-active"
+            role="tab"
+            id="tab-clock"
+            aria-controls="panel-clock"
+            aria-selected="true"
+            data-tab="clock"
+          >
+            Clock
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-extra"
+            aria-controls="panel-extra"
+            aria-selected="false"
+            data-tab="extra"
+          >
+            Extra Rounds
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-result"
+            aria-controls="panel-result"
+            aria-selected="false"
+            data-tab="result"
+          >
+            Result
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-read"
+            aria-controls="panel-read"
+            aria-selected="false"
+            data-tab="read"
+          >
+            Read this
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-mm"
+            aria-controls="panel-mm"
+            aria-selected="false"
+            data-tab="mm"
+          >
+            Hare Krsna MM
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-photos"
+            aria-controls="panel-photos"
+            aria-selected="false"
+            data-tab="photos"
+          >
+            Photos
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-books"
+            aria-controls="panel-books"
+            aria-selected="false"
+            data-tab="books"
+          >
+            Book Reading
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-hearing"
+            aria-controls="panel-hearing"
+            aria-selected="false"
+            data-tab="hearing"
+          >
+            Hearing
+          </button>
+        </li>
+      </ul>
+    </nav>
+
     <div
       id="timer-fullscreen"
       class="timer-fullscreen"
@@ -548,27 +543,27 @@
       </div>
     </div>
 
-    <script src="js/format-time.js"></script>
-    <script src="js/date-utils.js"></script>
-    <script src="js/stopwatch.js"></script>
-    <script src="js/rounds-list.js"></script>
-    <script src="js/session-store.js"></script>
-    <script src="js/results-store.js"></script>
-    <script src="js/quotes-data.js"></script>
-    <script src="js/mantra-data.js"></script>
-    <script src="js/photos-data.js"></script>
-    <script src="js/read-viewer.js"></script>
-    <script src="js/read-panel.js"></script>
-    <script src="js/mantra-panel.js"></script>
-    <script src="js/photo-viewer.js"></script>
-    <script src="js/photos-panel.js"></script>
-    <script src="js/book-reading-store.js"></script>
-    <script src="js/book-reading-panel.js"></script>
-    <script src="js/hearing-store.js"></script>
-    <script src="js/hearing-panel.js"></script>
-    <script src="js/results-panel.js"></script>
-    <script src="js/timer-fullscreen.js"></script>
-    <script src="js/tabs.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/format-time.js?v=3"></script>
+    <script src="js/date-utils.js?v=3"></script>
+    <script src="js/stopwatch.js?v=3"></script>
+    <script src="js/rounds-list.js?v=3"></script>
+    <script src="js/session-store.js?v=3"></script>
+    <script src="js/results-store.js?v=3"></script>
+    <script src="js/quotes-data.js?v=3"></script>
+    <script src="js/mantra-data.js?v=3"></script>
+    <script src="js/photos-data.js?v=3"></script>
+    <script src="js/read-viewer.js?v=3"></script>
+    <script src="js/read-panel.js?v=3"></script>
+    <script src="js/mantra-panel.js?v=3"></script>
+    <script src="js/photo-viewer.js?v=3"></script>
+    <script src="js/photos-panel.js?v=3"></script>
+    <script src="js/book-reading-store.js?v=3"></script>
+    <script src="js/book-reading-panel.js?v=3"></script>
+    <script src="js/hearing-store.js?v=3"></script>
+    <script src="js/hearing-panel.js?v=3"></script>
+    <script src="js/results-panel.js?v=3"></script>
+    <script src="js/timer-fullscreen.js?v=3"></script>
+    <script src="js/tabs.js?v=3"></script>
+    <script src="js/app.js?v=3"></script>
   </body>
 </html>
