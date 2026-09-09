@@ -13,6 +13,8 @@ window.JapaTabs = {
       read: document.getElementById("panel-read"),
       mm: document.getElementById("panel-mm"),
       photos: document.getElementById("panel-photos"),
+      books: document.getElementById("panel-books"),
+      hearing: document.getElementById("panel-hearing"),
     };
 
     function activate(tabName) {

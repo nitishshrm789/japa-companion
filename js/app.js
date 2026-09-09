@@ -241,6 +241,12 @@
       if (name === "result") {
         refreshResults();
       }
+      if (name === "books") {
+        window.JapaBookPanel.render(document.getElementById("books-root"));
+      }
+      if (name === "hearing") {
+        window.JapaHearingPanel.render(document.getElementById("hearing-root"));
+      }
     },
   });
 
@@ -250,6 +256,8 @@
     window.JapaReadPanel.render(document.getElementById("read-root"));
     window.JapaMantraPanel.render(document.getElementById("mm-root"));
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));
+    window.JapaBookPanel.render(document.getElementById("books-root"));
+    window.JapaHearingPanel.render(document.getElementById("hearing-root"));
     refreshResults();
   } catch (error) {
     console.error("Panels failed to load:", error);

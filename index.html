@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="css/read.css" />
     <link rel="stylesheet" href="css/photos.css" />
     <link rel="stylesheet" href="css/results.css" />
+    <link rel="stylesheet" href="css/book-reading.css" />
+    <link rel="stylesheet" href="css/hearing.css" />
   </head>
   <body>
     <main class="app">
@@ -93,6 +95,28 @@
           data-tab="photos"
         >
           Photos
+        </button>
+        <button
+          type="button"
+          class="tabs__btn"
+          role="tab"
+          id="tab-books"
+          aria-controls="panel-books"
+          aria-selected="false"
+          data-tab="books"
+        >
+          Book Reading
+        </button>
+        <button
+          type="button"
+          class="tabs__btn"
+          role="tab"
+          id="tab-hearing"
+          aria-controls="panel-hearing"
+          aria-selected="false"
+          data-tab="hearing"
+        >
+          Hearing
         </button>
       </nav>
 
@@ -335,6 +359,26 @@
           class="photo-root boxes-grid boxes-grid--photos"
         ></div>
       </section>
+
+      <section
+        id="panel-books"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-books"
+        hidden
+      >
+        <div id="books-root" class="books-root"></div>
+      </section>
+
+      <section
+        id="panel-hearing"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-hearing"
+        hidden
+      >
+        <div id="hearing-root" class="hearing-root"></div>
+      </section>
     </main>
 
     <div
@@ -466,6 +510,10 @@
     <script src="js/mantra-panel.js"></script>
     <script src="js/photo-viewer.js"></script>
     <script src="js/photos-panel.js"></script>
+    <script src="js/book-reading-store.js"></script>
+    <script src="js/book-reading-panel.js"></script>
+    <script src="js/hearing-store.js"></script>
+    <script src="js/hearing-panel.js"></script>
     <script src="js/results-panel.js"></script>
     <script src="js/timer-fullscreen.js"></script>
     <script src="js/tabs.js"></script>
