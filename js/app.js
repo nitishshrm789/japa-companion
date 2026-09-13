@@ -260,6 +260,9 @@
       if (name === "result") {
         refreshResults();
       }
+      if (name === "todo") {
+        window.JapaTodoPanel.render(document.getElementById("todo-root"));
+      }
       if (name === "digital") {
         window.JapaDigitalCounterPanel.render(
           document.getElementById("panel-digital")
@@ -286,6 +289,7 @@
     window.JapaDigitalCounterPanel.render(
       document.getElementById("panel-digital")
     );
+    window.JapaTodoPanel.render(document.getElementById("todo-root"));
     window.JapaReadPanel.render(document.getElementById("read-root"));
     window.JapaMantraPanel.render(document.getElementById("mm-root"));
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));

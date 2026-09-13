@@ -1,0 +1,270 @@
+/**
+ * To Do List — add tasks with date, complete via checkbox, remove overdue.
+ */
+window.JapaTodoPanel = {
+  render(rootElement) {
+    this.root = rootElement;
+    this.tasks = window.JapaTodoStore.load();
+    this.ensureFormScreen();
+    this.drawList();
+  },
+
+  ensureFormScreen() {
+    if (document.getElementById("todo-form-screen")) {
+      this.formScreen = document.getElementById("todo-form-screen");
+      return;
+    }
+
+    const screen = document.createElement("div");
+    screen.id = "todo-form-screen";
+    screen.className = "todo-form-screen";
+    screen.hidden = true;
+    screen.setAttribute("role", "dialog");
+    screen.setAttribute("aria-modal", "true");
+    screen.setAttribute("aria-labelledby", "todo-form-title");
+    document.body.append(screen);
+    this.formScreen = screen;
+  },
+
+  persist() {
+    this.tasks = window.JapaTodoStore.save(this.tasks);
+  },
+
+  isOverdue(dateKey) {
+    const today = window.JapaTime.getLocalDateKey();
+    return dateKey < today;
+  },
+
+  drawList() {
+    const root = this.root;
+    root.replaceChildren();
+
+    const list = document.createElement("div");
+    list.className = "todo-list";
+
+    if (this.tasks.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "todo-empty box";
+      empty.textContent = "No tasks yet. Tap + to add one.";
+      list.append(empty);
+    } else {
+      this.tasks.forEach(
+        function (task) {
+          list.append(this.buildCard(task));
+        }.bind(this)
+      );
+    }
+
+    root.append(list);
+
+    const addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.className = "todo-fab";
+    addBtn.setAttribute("aria-label", "Add task");
+    addBtn.innerHTML = "<span aria-hidden=\"true\">+</span>";
+    addBtn.addEventListener(
+      "click",
+      function () {
+        this.openForm();
+      }.bind(this)
+    );
+    root.append(addBtn);
+  },
+
+  buildCard(task) {
+    const overdue = this.isOverdue(task.dateKey);
+    const card = document.createElement("article");
+    card.className = "todo-card box" + (overdue ? " is-overdue" : "");
+
+    const dateLabel = document.createElement("p");
+    dateLabel.className = "todo-card__date";
+    dateLabel.textContent =
+      "Date: " + window.JapaTime.formatDateLabel(task.dateKey);
+
+    const row = document.createElement("div");
+    row.className = "todo-card__row";
+
+    const check = document.createElement("button");
+    check.type = "button";
+    check.className = "todo-check";
+    check.setAttribute("aria-label", "Mark task completed");
+    check.addEventListener(
+      "click",
+      function () {
+        this.completeTask(task.id);
+      }.bind(this)
+    );
+
+    const text = document.createElement("p");
+    text.className = "todo-card__text";
+    text.textContent = task.text;
+
+    row.append(check, text);
+
+    if (overdue) {
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "todo-remove";
+      removeBtn.textContent = "Remove";
+      removeBtn.addEventListener(
+        "click",
+        function () {
+          this.removeTask(task.id);
+        }.bind(this)
+      );
+      row.append(removeBtn);
+    }
+
+    card.append(dateLabel, row);
+    return card;
+  },
+
+  completeTask(id) {
+    this.tasks = this.tasks.filter(function (task) {
+      return task.id !== id;
+    });
+    this.persist();
+    this.drawList();
+  },
+
+  removeTask(id) {
+    this.tasks = this.tasks.filter(function (task) {
+      return task.id !== id;
+    });
+    this.persist();
+    this.drawList();
+  },
+
+  openForm() {
+    this.drawFormScreen();
+    this.formScreen.hidden = false;
+    document.body.classList.add("is-todo-form-open");
+    const firstInput = this.formScreen.querySelector("input[type='text']");
+    if (firstInput) {
+      firstInput.focus();
+    }
+  },
+
+  closeForm() {
+    this.formScreen.hidden = true;
+    this.formScreen.replaceChildren();
+    document.body.classList.remove("is-todo-form-open");
+  },
+
+  drawFormScreen() {
+    const screen = this.formScreen;
+    screen.replaceChildren();
+
+    const bar = document.createElement("div");
+    bar.className = "todo-form-screen__bar";
+
+    const backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.className = "todo-form-screen__back";
+    backBtn.textContent = "Back";
+    backBtn.addEventListener(
+      "click",
+      function () {
+        this.closeForm();
+      }.bind(this)
+    );
+    bar.append(backBtn);
+
+    const form = document.createElement("form");
+    form.className = "todo-form-screen__form";
+    form.noValidate = true;
+
+    const heading = document.createElement("h2");
+    heading.id = "todo-form-title";
+    heading.className = "todo-form-screen__title";
+    heading.textContent = "New task";
+    heading.hidden = true;
+
+    const taskField = document.createElement("label");
+    taskField.className = "todo-field";
+    taskField.setAttribute("for", "todo-field-text");
+
+    const taskLabel = document.createElement("span");
+    taskLabel.textContent = "What is to be done?";
+
+    const taskInput = document.createElement("input");
+    taskInput.id = "todo-field-text";
+    taskInput.name = "text";
+    taskInput.type = "text";
+    taskInput.autocomplete = "off";
+    taskInput.placeholder = " ";
+    taskField.append(taskLabel, taskInput);
+
+    const dateField = document.createElement("label");
+    dateField.className = "todo-field todo-field--date";
+    dateField.setAttribute("for", "todo-field-date");
+
+    const dateLabel = document.createElement("span");
+    dateLabel.textContent = "Enter Date";
+
+    const dateWrap = document.createElement("div");
+    dateWrap.className = "todo-date-wrap";
+
+    const dateInput = document.createElement("input");
+    dateInput.id = "todo-field-date";
+    dateInput.name = "dateKey";
+    dateInput.type = "date";
+    dateInput.min = window.JapaTime.getLocalDateKey();
+
+    dateWrap.append(dateInput);
+    dateField.append(dateLabel, dateWrap);
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.type = "submit";
+    confirmBtn.className = "todo-confirm";
+    confirmBtn.hidden = true;
+    confirmBtn.setAttribute("aria-label", "Save task");
+    confirmBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    function updateConfirmVisibility() {
+      const text = String(taskInput.value || "").trim();
+      const dateKey = String(dateInput.value || "").trim();
+      confirmBtn.hidden = !(text && dateKey);
+    }
+
+    taskInput.addEventListener("input", updateConfirmVisibility);
+    dateInput.addEventListener("change", updateConfirmVisibility);
+    dateInput.addEventListener("input", updateConfirmVisibility);
+
+    form.append(heading, taskField, dateField, confirmBtn);
+
+    form.addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+        const text = String(taskInput.value || "").trim();
+        const dateKey = String(dateInput.value || "").trim();
+        const today = window.JapaTime.getLocalDateKey();
+
+        if (!text || !dateKey) {
+          return;
+        }
+
+        if (dateKey < today) {
+          window.alert("Please choose the correct Date");
+          dateInput.focus();
+          return;
+        }
+
+        this.tasks.push({
+          id: window.JapaTodoStore.createId(),
+          text: text,
+          dateKey: dateKey,
+          createdAt: Date.now(),
+        });
+        this.persist();
+        this.closeForm();
+        this.drawList();
+      }.bind(this)
+    );
+
+    screen.append(bar, form);
+    updateConfirmVisibility();
+  },
+};
