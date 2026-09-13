@@ -55,19 +55,22 @@ window.JapaProgressPanel = {
       Math.round((item.partsRead / item.totalParts) * 1000) / 10
     );
 
+    // Daily Targeted = (Total − Read) / Days Remaining
     let dailyTargeted = 0;
     if (daysRemaining > 0) {
-      dailyTargeted = item.totalParts / daysRemaining;
+      dailyTargeted = partsLeft / daysRemaining;
     } else if (partsLeft > 0) {
       dailyTargeted = partsLeft;
     }
 
-    let paceNeeded = 0;
-    if (daysRemaining > 0) {
-      paceNeeded = partsLeft / daysRemaining;
-    } else if (partsLeft > 0) {
-      paceNeeded = partsLeft;
-    }
+    const paceNeeded = dailyTargeted;
+
+    const plannedSpan = window.JapaTime.daysUntil(
+      item.completeDateKey,
+      new Date(item.createdAt)
+    );
+    const originalDaily =
+      plannedSpan > 0 ? item.totalParts / plannedSpan : item.totalParts;
 
     let status = "on-track";
     let statusLabel = "On track";
@@ -80,7 +83,7 @@ window.JapaProgressPanel = {
     } else if (daysRemaining === 0 && partsLeft > 0) {
       status = "due-today";
       statusLabel = "Due today";
-    } else if (paceNeeded > dailyTargeted * 1.15) {
+    } else if (dailyTargeted > originalDaily * 1.15) {
       status = "behind";
       statusLabel = "Needs focus";
     }
