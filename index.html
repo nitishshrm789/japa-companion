@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="css/progress.css?v=1" />
     <link rel="stylesheet" href="css/expense.css?v=1" />
     <link rel="stylesheet" href="css/health.css?v=1" />
+    <link rel="stylesheet" href="css/financial.css?v=1" />
   </head>
   <body>
     <main class="app">
@@ -467,6 +468,16 @@
       >
         <div id="health-root" class="health-root"></div>
       </section>
+
+      <section
+        id="panel-financial"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-financial"
+        hidden
+      >
+        <div id="financial-root" class="financial-root"></div>
+      </section>
     </main>
 
     <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true"></div>
@@ -665,6 +676,19 @@
             Health
           </button>
         </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-financial"
+            aria-controls="panel-financial"
+            aria-selected="false"
+            data-tab="financial"
+          >
+            Financial
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -814,9 +838,11 @@
     <script src="js/expense-panel.js?v=1"></script>
     <script src="js/health-store.js?v=1"></script>
     <script src="js/health-panel.js?v=1"></script>
+    <script src="js/financial-store.js?v=1"></script>
+    <script src="js/financial-panel.js?v=2"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=11"></script>
-    <script src="js/app.js?v=11"></script>
+    <script src="js/tabs.js?v=12"></script>
+    <script src="js/app.js?v=12"></script>
   </body>
 </html>
