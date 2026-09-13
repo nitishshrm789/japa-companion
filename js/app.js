@@ -287,6 +287,9 @@
           document.getElementById("personalities-root")
         );
       }
+      if (name === "health") {
+        window.JapaHealthPanel.render(document.getElementById("health-root"));
+      }
     },
   });
 
@@ -308,6 +311,7 @@
     window.JapaPersonalitiesPanel.render(
       document.getElementById("personalities-root")
     );
+    window.JapaHealthPanel.render(document.getElementById("health-root"));
     refreshResults();
   } catch (error) {
     console.error("Panels failed to load:", error);

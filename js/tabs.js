@@ -16,6 +16,7 @@ window.JapaTabs = {
     hearing: "Hearing",
     expense: "Expense Manager",
     personalities: "Personalities",
+    health: "Health",
   },
 
   init(options) {
@@ -36,6 +37,7 @@ window.JapaTabs = {
       hearing: document.getElementById("panel-hearing"),
       expense: document.getElementById("panel-expense"),
       personalities: document.getElementById("panel-personalities"),
+      health: document.getElementById("panel-health"),
     };
 
     const menu = document.getElementById("app-menu");

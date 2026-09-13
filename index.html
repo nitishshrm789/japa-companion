@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/todo.css?v=2" />
     <link rel="stylesheet" href="css/progress.css?v=1" />
     <link rel="stylesheet" href="css/expense.css?v=1" />
+    <link rel="stylesheet" href="css/health.css?v=1" />
   </head>
   <body>
     <main class="app">
@@ -456,6 +457,16 @@
       >
         <div id="personalities-root" class="personalities-root"></div>
       </section>
+
+      <section
+        id="panel-health"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-health"
+        hidden
+      >
+        <div id="health-root" class="health-root"></div>
+      </section>
     </main>
 
     <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true"></div>
@@ -641,6 +652,19 @@
             Personalities
           </button>
         </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-health"
+            aria-controls="panel-health"
+            aria-selected="false"
+            data-tab="health"
+          >
+            Health
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -788,9 +812,11 @@
     <script src="js/progress-panel.js?v=1"></script>
     <script src="js/expense-store.js?v=1"></script>
     <script src="js/expense-panel.js?v=1"></script>
+    <script src="js/health-store.js?v=1"></script>
+    <script src="js/health-panel.js?v=1"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=10"></script>
-    <script src="js/app.js?v=10"></script>
+    <script src="js/tabs.js?v=11"></script>
+    <script src="js/app.js?v=11"></script>
   </body>
 </html>
