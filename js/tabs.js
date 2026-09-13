@@ -3,6 +3,7 @@
  */
 window.JapaTabs = {
   LABELS: {
+    digital: "Digital Counter",
     clock: "Clock",
     extra: "Extra Rounds",
     result: "Result",
@@ -19,6 +20,7 @@ window.JapaTabs = {
       document.querySelectorAll("[data-tab]")
     );
     const panels = {
+      digital: document.getElementById("panel-digital"),
       clock: document.getElementById("panel-clock"),
       extra: document.getElementById("panel-extra"),
       result: document.getElementById("panel-result"),

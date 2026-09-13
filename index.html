@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="css/boxes.css?v=3" />
     <link rel="stylesheet" href="css/read.css?v=3" />
     <link rel="stylesheet" href="css/photos.css?v=3" />
-    <link rel="stylesheet" href="css/results.css?v=3" />
+    <link rel="stylesheet" href="css/results.css?v=7" />
     <link rel="stylesheet" href="css/book-reading.css?v=3" />
     <link rel="stylesheet" href="css/hearing.css?v=3" />
     <link rel="stylesheet" href="css/personalities.css?v=1" />
+    <link rel="stylesheet" href="css/digital-counter.css?v=1" />
   </head>
   <body>
     <main class="app">
@@ -47,6 +48,111 @@
         </div>
         <p id="section-label" class="app__section-label">Clock</p>
       </header>
+
+      <section
+        id="panel-digital"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-digital"
+        hidden
+      >
+        <div class="digital-counter">
+          <div class="digital-bead-wrap">
+            <button
+              type="button"
+              id="digital-bead"
+              class="digital-bead"
+              aria-label="Count one mantra bead"
+            >
+              <span id="digital-bead-value" class="digital-bead__value">0</span>
+            </button>
+          </div>
+
+          <section
+            class="digital-timer-panel"
+            aria-label="Digital counter timer"
+          >
+            <div
+              id="digital-timer-display"
+              class="digital-timer-display"
+              role="timer"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              00:00
+            </div>
+            <p
+              id="digital-round-progress"
+              class="digital-round-progress"
+              aria-live="polite"
+            >
+              0 / 16 complete
+            </p>
+          </section>
+
+          <p class="digital-help">
+            Tap the circle for each mantra (108 = 1 round). Timer starts on
+            first tap or Start.
+          </p>
+
+          <section class="controls" aria-label="Digital counter controls">
+            <button
+              type="button"
+              id="btn-digital-start"
+              class="btn btn--start"
+              aria-label="Start digital counter timer"
+            >
+              Start
+            </button>
+            <button
+              type="button"
+              id="btn-digital-stop"
+              class="btn btn--stop"
+              aria-label="Pause digital counter timer"
+            >
+              Stop
+            </button>
+            <button
+              type="button"
+              id="btn-digital-reset"
+              class="btn btn--reset"
+              aria-label="Reset bead count and timer"
+            >
+              Reset
+            </button>
+          </section>
+
+          <section
+            class="rounds-panel"
+            aria-label="Digital counter rounds"
+          >
+            <div class="rounds-panel__top">
+              <h2 class="rounds-panel__heading">Rounds (max 16)</h2>
+              <button
+                type="button"
+                id="btn-digital-clear"
+                class="btn-clear-session"
+                aria-label="Clear digital counter session"
+              >
+                Clear
+              </button>
+            </div>
+            <ul id="digital-rounds-list" class="rounds-list"></ul>
+            <p id="digital-rounds-empty" class="rounds-empty">
+              No rounds yet. Complete 108 taps to save a round.
+            </p>
+          </section>
+
+          <button
+            type="button"
+            id="btn-digital-save-day"
+            class="btn btn--save-day"
+            aria-label="Save digital counter rounds to Result"
+          >
+            Save Day
+          </button>
+        </div>
+      </section>
 
       <section
         id="panel-clock"
@@ -336,6 +442,19 @@
         <li>
           <button
             type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-digital"
+            aria-controls="panel-digital"
+            aria-selected="false"
+            data-tab="digital"
+          >
+            Digital Counter
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
             class="app-menu__item is-active"
             role="tab"
             id="tab-clock"
@@ -574,6 +693,9 @@
     <script src="js/rounds-list.js?v=3"></script>
     <script src="js/session-store.js?v=6"></script>
     <script src="js/results-store.js?v=3"></script>
+    <script src="js/digital-results-store.js?v=1"></script>
+    <script src="js/digital-counter-store.js?v=1"></script>
+    <script src="js/digital-counter-panel.js?v=2"></script>
     <script src="js/quotes-data.js?v=3"></script>
     <script src="js/mantra-data.js?v=3"></script>
     <script src="js/photos-data.js?v=3"></script>
@@ -588,9 +710,9 @@
     <script src="js/hearing-panel.js?v=3"></script>
     <script src="js/personalities-store.js?v=1"></script>
     <script src="js/personalities-panel.js?v=1"></script>
-    <script src="js/results-panel.js?v=3"></script>
+    <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=5"></script>
-    <script src="js/app.js?v=6"></script>
+    <script src="js/tabs.js?v=7"></script>
+    <script src="js/app.js?v=7"></script>
   </body>
 </html>

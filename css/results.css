@@ -16,6 +16,20 @@
   padding-bottom: var(--space-lg);
 }
 
+.result-section-title {
+  margin: var(--space-sm) 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.result-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
 .result-day {
   padding: var(--space-md);
 }

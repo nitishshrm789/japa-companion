@@ -260,6 +260,11 @@
       if (name === "result") {
         refreshResults();
       }
+      if (name === "digital") {
+        window.JapaDigitalCounterPanel.render(
+          document.getElementById("panel-digital")
+        );
+      }
       if (name === "books") {
         window.JapaBookPanel.render(document.getElementById("books-root"));
       }
@@ -277,6 +282,10 @@
   try {
     window.JapaReadViewer.init();
     window.JapaPhotoViewer.init();
+    window.JapaDigitalCounterPanel.onSaved = refreshResults;
+    window.JapaDigitalCounterPanel.render(
+      document.getElementById("panel-digital")
+    );
     window.JapaReadPanel.render(document.getElementById("read-root"));
     window.JapaMantraPanel.render(document.getElementById("mm-root"));
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));
@@ -354,15 +363,24 @@
     if (document.visibilityState === "hidden") {
       stopwatch.suspendDisplay();
       extraStopwatch.suspendDisplay();
+      if (window.JapaDigitalCounterPanel.onVisibilityHidden) {
+        window.JapaDigitalCounterPanel.onVisibilityHidden();
+      }
       persistSession();
       return;
     }
     stopwatch.resumeDisplay();
     extraStopwatch.resumeDisplay();
+    if (window.JapaDigitalCounterPanel.onVisibilityVisible) {
+      window.JapaDigitalCounterPanel.onVisibilityVisible();
+    }
     persistSession();
   });
 
   window.addEventListener("pagehide", function () {
     persistSession();
+    if (window.JapaDigitalCounterPanel.persist) {
+      window.JapaDigitalCounterPanel.persist();
+    }
   });
 })();

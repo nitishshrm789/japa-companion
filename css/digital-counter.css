@@ -1,0 +1,76 @@
+.digital-counter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.digital-bead-wrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-sm) 0;
+}
+
+.digital-bead {
+  width: min(68vw, 15rem);
+  height: min(68vw, 15rem);
+  border-radius: 50%;
+  border: 3px solid var(--color-border);
+  background: #ffffff;
+  color: var(--color-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  box-shadow: var(--shadow-soft);
+  transition: background-color 0.08s ease, transform 0.08s ease;
+}
+
+.digital-bead:active,
+.digital-bead.is-pressed {
+  background: #b0b0b0;
+  transform: scale(0.985);
+}
+
+.digital-bead__value {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 16vw, 4.5rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.digital-timer-panel {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-soft);
+  padding: 1.1rem var(--space-md) 1rem;
+  text-align: center;
+}
+
+.digital-timer-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 11vw, 3.25rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.digital-round-progress {
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.digital-help {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-top: calc(-1 * var(--space-sm));
+}
