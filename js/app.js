@@ -263,6 +263,11 @@
       if (name === "todo") {
         window.JapaTodoPanel.render(document.getElementById("todo-root"));
       }
+      if (name === "progress") {
+        window.JapaProgressPanel.render(
+          document.getElementById("progress-root")
+        );
+      }
       if (name === "digital") {
         window.JapaDigitalCounterPanel.render(
           document.getElementById("panel-digital")
@@ -290,6 +295,7 @@
       document.getElementById("panel-digital")
     );
     window.JapaTodoPanel.render(document.getElementById("todo-root"));
+    window.JapaProgressPanel.render(document.getElementById("progress-root"));
     window.JapaReadPanel.render(document.getElementById("read-root"));
     window.JapaMantraPanel.render(document.getElementById("mm-root"));
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));

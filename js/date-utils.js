@@ -32,3 +32,24 @@ window.JapaTime.sumElapsed = function sumElapsed(rounds) {
     return total + (round.elapsedMs || 0);
   }, 0);
 };
+
+/**
+ * Whole calendar days from today (or fromDate) until dateKey.
+ * Negative when dateKey is in the past.
+ */
+window.JapaTime.daysUntil = function daysUntil(dateKey, fromDate) {
+  const parts = String(dateKey || "").split("-");
+  if (parts.length !== 3) {
+    return 0;
+  }
+  const target = new Date(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2])
+  );
+  target.setHours(0, 0, 0, 0);
+  const from = fromDate ? new Date(fromDate) : new Date();
+  from.setHours(0, 0, 0, 0);
+  const ms = target.getTime() - from.getTime();
+  return Math.round(ms / 86400000);
+};
