@@ -279,6 +279,9 @@
       if (name === "hearing") {
         window.JapaHearingPanel.render(document.getElementById("hearing-root"));
       }
+      if (name === "expense") {
+        window.JapaExpensePanel.render(document.getElementById("expense-root"));
+      }
       if (name === "personalities") {
         window.JapaPersonalitiesPanel.render(
           document.getElementById("personalities-root")
@@ -301,6 +304,7 @@
     window.JapaPhotosPanel.render(document.getElementById("photos-root"));
     window.JapaBookPanel.render(document.getElementById("books-root"));
     window.JapaHearingPanel.render(document.getElementById("hearing-root"));
+    window.JapaExpensePanel.render(document.getElementById("expense-root"));
     window.JapaPersonalitiesPanel.render(
       document.getElementById("personalities-root")
     );

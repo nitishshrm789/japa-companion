@@ -14,6 +14,7 @@ window.JapaTabs = {
     photos: "Photos",
     books: "Book Reading",
     hearing: "Hearing",
+    expense: "Expense Manager",
     personalities: "Personalities",
   },
 
@@ -33,6 +34,7 @@ window.JapaTabs = {
       photos: document.getElementById("panel-photos"),
       books: document.getElementById("panel-books"),
       hearing: document.getElementById("panel-hearing"),
+      expense: document.getElementById("panel-expense"),
       personalities: document.getElementById("panel-personalities"),
     };
 

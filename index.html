@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/digital-counter.css?v=1" />
     <link rel="stylesheet" href="css/todo.css?v=2" />
     <link rel="stylesheet" href="css/progress.css?v=1" />
+    <link rel="stylesheet" href="css/expense.css?v=1" />
   </head>
   <body>
     <main class="app">
@@ -437,6 +438,16 @@
       </section>
 
       <section
+        id="panel-expense"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-expense"
+        hidden
+      >
+        <div id="expense-root" class="expense-root"></div>
+      </section>
+
+      <section
         id="panel-personalities"
         class="tab-panel"
         role="tabpanel"
@@ -609,6 +620,19 @@
             type="button"
             class="app-menu__item"
             role="tab"
+            id="tab-expense"
+            aria-controls="panel-expense"
+            aria-selected="false"
+            data-tab="expense"
+          >
+            Expense Manager
+          </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
             id="tab-personalities"
             aria-controls="panel-personalities"
             aria-selected="false"
@@ -736,7 +760,7 @@
     </div>
 
     <script src="js/format-time.js?v=3"></script>
-    <script src="js/date-utils.js?v=4"></script>
+    <script src="js/date-utils.js?v=5"></script>
     <script src="js/stopwatch.js?v=6"></script>
     <script src="js/rounds-list.js?v=3"></script>
     <script src="js/session-store.js?v=6"></script>
@@ -762,9 +786,11 @@
     <script src="js/todo-panel.js?v=2"></script>
     <script src="js/progress-store.js?v=1"></script>
     <script src="js/progress-panel.js?v=1"></script>
+    <script src="js/expense-store.js?v=1"></script>
+    <script src="js/expense-panel.js?v=1"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=9"></script>
-    <script src="js/app.js?v=9"></script>
+    <script src="js/tabs.js?v=10"></script>
+    <script src="js/app.js?v=10"></script>
   </body>
 </html>

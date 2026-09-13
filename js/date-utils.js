@@ -53,3 +53,76 @@ window.JapaTime.daysUntil = function daysUntil(dateKey, fromDate) {
   const ms = target.getTime() - from.getTime();
   return Math.round(ms / 86400000);
 };
+
+window.JapaTime.parseDateKey = function parseDateKey(dateKey) {
+  const parts = String(dateKey || "").split("-");
+  if (parts.length !== 3) {
+    return null;
+  }
+  const date = new Date(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2])
+  );
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
+/** Example: 03-Sep-2026 */
+window.JapaTime.formatDayMonthYear = function formatDayMonthYear(dateKey) {
+  const date = window.JapaTime.parseDateKey(dateKey);
+  if (!date) {
+    return dateKey;
+  }
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const day = String(date.getDate()).padStart(2, "0");
+  return day + "-" + months[date.getMonth()] + "-" + date.getFullYear();
+};
+
+/** Example: Thu 03 Sept 2026 */
+window.JapaTime.formatExpenseDateHeading = function formatExpenseDateHeading(
+  dateKey
+) {
+  const date = window.JapaTime.parseDateKey(dateKey);
+  if (!date) {
+    return dateKey;
+  }
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const day = String(date.getDate()).padStart(2, "0");
+  return (
+    weekdays[date.getDay()] +
+    " " +
+    day +
+    " " +
+    months[date.getMonth()] +
+    " " +
+    date.getFullYear()
+  );
+};
