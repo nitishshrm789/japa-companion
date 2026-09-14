@@ -48,7 +48,8 @@ window.JapaProgressPanel = {
   },
 
   calc(item) {
-    const daysRemaining = window.JapaTime.daysUntil(item.completeDateKey);
+    // Days Remaining = (Date to Complete − Today) + 1 (includes today)
+    const daysRemaining = window.JapaTime.daysUntil(item.completeDateKey) + 1;
     const partsLeft = Math.max(0, item.totalParts - item.partsRead);
     const percent = Math.min(
       100,
@@ -65,10 +66,11 @@ window.JapaProgressPanel = {
 
     const paceNeeded = dailyTargeted;
 
-    const plannedSpan = window.JapaTime.daysUntil(
-      item.completeDateKey,
-      new Date(item.createdAt)
-    );
+    const plannedSpan =
+      window.JapaTime.daysUntil(
+        item.completeDateKey,
+        new Date(item.createdAt)
+      ) + 1;
     const originalDaily =
       plannedSpan > 0 ? item.totalParts / plannedSpan : item.totalParts;
 
@@ -77,10 +79,10 @@ window.JapaProgressPanel = {
     if (partsLeft <= 0) {
       status = "done";
       statusLabel = "Completed";
-    } else if (daysRemaining < 0) {
+    } else if (daysRemaining <= 0) {
       status = "overdue";
       statusLabel = "Past due";
-    } else if (daysRemaining === 0 && partsLeft > 0) {
+    } else if (daysRemaining === 1) {
       status = "due-today";
       statusLabel = "Due today";
     } else if (dailyTargeted > originalDaily * 1.15) {
@@ -230,7 +232,7 @@ window.JapaProgressPanel = {
       ],
       [
         "Days Remaining",
-        stats.daysRemaining < 0
+        stats.daysRemaining <= 0
           ? String(stats.daysRemaining) + " (overdue)"
           : String(stats.daysRemaining),
       ],
@@ -582,7 +584,7 @@ window.JapaProgressPanel = {
           ". " +
           (row.stats.partsLeft <= 0
             ? "Finished."
-            : row.stats.daysRemaining < 0
+            : row.stats.daysRemaining <= 0
               ? "Past due — finish remaining " +
                 row.stats.partsLeft +
                 " as soon as possible."
