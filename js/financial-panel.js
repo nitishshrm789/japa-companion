@@ -79,7 +79,7 @@ window.JapaFinancialPanel = {
     bar.append(backBtn);
 
     const content = document.createElement("div");
-    content.className = "financial-calculator-placeholder";
+    content.className = "financial-calculator-hub";
 
     const heading = document.createElement("h2");
     heading.id = "financial-calculator-title";
@@ -89,16 +89,8 @@ window.JapaFinancialPanel = {
     const message = document.createElement("p");
     message.textContent = "Choose a financial calculation.";
 
-    const doublingButton = document.createElement("button");
-    doublingButton.type = "button";
-    doublingButton.className =
-      "btn btn--save-day financial-calculator-option";
-    doublingButton.textContent = "Money Doubling Time";
-    doublingButton.addEventListener("click", function () {
-      window.JapaMoneyDoublingCalculator.open();
-    });
-
-    content.append(heading, message, doublingButton);
+    content.append(heading, message);
+    window.JapaFinanceCalculatorPanel.renderCatalog(content);
     screen.append(bar, content);
     document.body.append(screen);
     this.calculatorScreen = screen;

@@ -213,15 +213,20 @@
   font-weight: 700;
 }
 
-.financial-calculator-placeholder {
+.financial-calculator-hub {
   width: 100%;
-  max-width: 28rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: var(--space-lg) var(--space-md);
+  overflow-y: auto;
+}
+
+.financial-calculator-hub > .financial-screen__title,
+.financial-calculator-hub > p {
   text-align: center;
 }
 
-.financial-calculator-placeholder p {
+.financial-calculator-hub > p {
   margin-top: var(--space-sm);
   color: var(--color-muted);
 }

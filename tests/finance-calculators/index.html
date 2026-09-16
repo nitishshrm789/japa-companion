@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Finance Calculator Tests</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/components.css" />
+    <link rel="stylesheet" href="../../css/results.css" />
+    <link rel="stylesheet" href="../../css/financial.css" />
+    <link rel="stylesheet" href="../../css/finance-calculators.css" />
+    <script>
+      window.__financeTestErrors = [];
+      window.addEventListener("error", function (event) {
+        window.__financeTestErrors.push(event.message);
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <div id="financial-root"></div>
+      <pre id="test-output">WAITING</pre>
+    </main>
+
+    <script src="../../js/format-time.js"></script>
+    <script src="../../js/date-utils.js"></script>
+    <script src="../../js/financial-store.js"></script>
+    <script src="../../js/finance-calculators/core.js"></script>
+    <script src="../../js/finance-calculators/investment-growth.js"></script>
+    <script src="../../js/finance-calculators/sip-mutual-funds.js"></script>
+    <script src="../../js/finance-calculators/loans.js"></script>
+    <script src="../../js/finance-calculators/inflation.js"></script>
+    <script src="../../js/finance-calculators/retirement.js"></script>
+    <script src="../../js/finance-calculators/personal-finance.js"></script>
+    <script src="../../js/finance-calculators/stocks.js"></script>
+    <script src="../../js/finance-calculators/property.js"></script>
+    <script src="../../js/finance-calculators/panel.js"></script>
+    <script src="../../js/financial-panel.js"></script>
+    <script src="test-runner.js"></script>
+    <script src="calculator-tests.js"></script>
+  </body>
+</html>
