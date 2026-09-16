@@ -84,7 +84,7 @@ window.JapaFinancialPanel = {
     const heading = document.createElement("h2");
     heading.id = "financial-calculator-title";
     heading.className = "financial-screen__title";
-    heading.textContent = "Calculate different Finance";
+    heading.textContent = "Calculate Different Finance";
 
     const message = document.createElement("p");
     message.textContent = "Choose a financial calculation.";
@@ -231,7 +231,7 @@ window.JapaFinancialPanel = {
     const calculatorBtn = document.createElement("button");
     calculatorBtn.type = "button";
     calculatorBtn.className = "btn btn--reset financial-calculator-btn";
-    calculatorBtn.textContent = "Calculate different Finance";
+    calculatorBtn.textContent = "Calculate Different Finance";
     calculatorBtn.addEventListener(
       "click",
       function () {

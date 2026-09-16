@@ -46,6 +46,12 @@
   margin-bottom: var(--space-md);
 }
 
+.financial-calculator-btn {
+  border-color: var(--color-finance-action-border);
+  background: var(--color-finance-action);
+  color: var(--color-finance-action-ink);
+}
+
 .financial-list {
   display: flex;
   flex-direction: column;
