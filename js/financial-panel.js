@@ -10,6 +10,7 @@ window.JapaFinancialPanel = {
     this.detailsItemId = null;
     this.ensureItemForm();
     this.ensureDetailsForm();
+    this.ensureCalculatorScreen();
     this.drawList();
   },
 
@@ -43,6 +44,64 @@ window.JapaFinancialPanel = {
     screen.setAttribute("aria-labelledby", "financial-details-title");
     document.body.append(screen);
     this.detailsScreen = screen;
+  },
+
+  ensureCalculatorScreen() {
+    const existingScreen = document.getElementById(
+      "financial-calculator-screen"
+    );
+    if (existingScreen) {
+      this.calculatorScreen = existingScreen;
+      return;
+    }
+
+    const screen = document.createElement("div");
+    screen.id = "financial-calculator-screen";
+    screen.className = "financial-screen";
+    screen.hidden = true;
+    screen.setAttribute("role", "dialog");
+    screen.setAttribute("aria-modal", "true");
+    screen.setAttribute("aria-labelledby", "financial-calculator-title");
+
+    const bar = document.createElement("div");
+    bar.className = "financial-screen__bar";
+
+    const backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.className = "financial-screen__back";
+    backBtn.textContent = "Back";
+    backBtn.addEventListener(
+      "click",
+      function () {
+        this.closeCalculatorScreen();
+      }.bind(this)
+    );
+    bar.append(backBtn);
+
+    const content = document.createElement("div");
+    content.className = "financial-calculator-placeholder";
+
+    const heading = document.createElement("h2");
+    heading.id = "financial-calculator-title";
+    heading.className = "financial-screen__title";
+    heading.textContent = "Calculate different Finance";
+
+    const message = document.createElement("p");
+    message.textContent = "Choose a financial calculation.";
+
+    const doublingButton = document.createElement("button");
+    doublingButton.type = "button";
+    doublingButton.className =
+      "btn btn--save-day financial-calculator-option";
+    doublingButton.textContent = "Money Doubling Time";
+    doublingButton.addEventListener("click", function () {
+      window.JapaMoneyDoublingCalculator.open();
+    });
+
+    content.append(heading, message, doublingButton);
+    screen.append(bar, content);
+    document.body.append(screen);
+    this.calculatorScreen = screen;
   },
 
   persist() {
@@ -176,6 +235,18 @@ window.JapaFinancialPanel = {
       }.bind(this)
     );
     root.append(addBtn);
+
+    const calculatorBtn = document.createElement("button");
+    calculatorBtn.type = "button";
+    calculatorBtn.className = "btn btn--reset financial-calculator-btn";
+    calculatorBtn.textContent = "Calculate different Finance";
+    calculatorBtn.addEventListener(
+      "click",
+      function () {
+        this.openCalculatorScreen();
+      }.bind(this)
+    );
+    root.append(calculatorBtn);
 
     const list = document.createElement("div");
     list.className = "financial-list";
@@ -368,6 +439,16 @@ window.JapaFinancialPanel = {
     this.detailsItemId = null;
     this.detailsScreen.hidden = true;
     this.detailsScreen.replaceChildren();
+    document.body.classList.remove("is-financial-form-open");
+  },
+
+  openCalculatorScreen() {
+    this.calculatorScreen.hidden = false;
+    document.body.classList.add("is-financial-form-open");
+  },
+
+  closeCalculatorScreen() {
+    this.calculatorScreen.hidden = true;
     document.body.classList.remove("is-financial-form-open");
   },
 

@@ -36,11 +36,13 @@
 }
 
 .financial-add-btn,
+.financial-calculator-btn,
 .financial-details-btn {
   width: 100%;
 }
 
-.financial-add-btn {
+.financial-add-btn,
+.financial-calculator-btn {
   margin-bottom: var(--space-md);
 }
 
@@ -209,6 +211,19 @@
 .financial-screen__title {
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+.financial-calculator-placeholder {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.financial-calculator-placeholder p {
+  margin-top: var(--space-sm);
+  color: var(--color-muted);
 }
 
 .financial-field {
