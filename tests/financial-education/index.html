@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Financial Education Tests</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/components.css" />
+    <link rel="stylesheet" href="../../css/financial.css" />
+    <link rel="stylesheet" href="../../css/financial-education.css" />
+    <script>
+      window.__educationTestErrors = [];
+      window.addEventListener("error", function (event) {
+        window.__educationTestErrors.push(event.message);
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <button id="open-trigger" type="button">Open</button>
+      <pre id="test-output">WAITING</pre>
+    </main>
+
+    <script src="../../js/financial-education/core.js"></script>
+    <script src="../../js/financial-education/store.js"></script>
+    <script src="../../js/financial-education/topics-protection.js"></script>
+    <script src="../../js/financial-education/topics-borrowing.js"></script>
+    <script src="../../js/financial-education/topics-investing.js"></script>
+    <script src="../../js/financial-education/topics-spending.js"></script>
+    <script src="../../js/financial-education/topics-planning.js"></script>
+    <script src="../../js/financial-education/panel.js"></script>
+    <script>
+      window.JapaFinancialStore = {
+        load: function () { return []; },
+        save: function (items) { return items; },
+        createId: function () { return "test-id"; }
+      };
+      window.JapaFinanceCalculatorPanel = {
+        renderCatalog: function () {}
+      };
+      window.JapaTime = {
+        daysUntil: function () { return 0; },
+        parseDateKey: function () { return new Date(); },
+        formatDayMonthYear: function (value) { return value; }
+      };
+    </script>
+    <script src="../../js/financial-panel.js"></script>
+    <script src="../finance-calculators/test-runner.js"></script>
+    <script src="education-tests.js"></script>
+  </body>
+</html>

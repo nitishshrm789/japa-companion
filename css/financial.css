@@ -36,14 +36,22 @@
 }
 
 .financial-add-btn,
+.financial-read-btn,
 .financial-calculator-btn,
 .financial-details-btn {
   width: 100%;
 }
 
 .financial-add-btn,
+.financial-read-btn,
 .financial-calculator-btn {
   margin-bottom: var(--space-md);
+}
+
+.financial-read-btn {
+  border-color: var(--color-reset);
+  background: var(--color-surface);
+  color: var(--color-reset);
 }
 
 .financial-calculator-btn {

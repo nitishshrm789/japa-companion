@@ -1,0 +1,171 @@
+.financial-education-screen {
+  overflow-y: auto;
+}
+
+.financial-education-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-bottom: var(--space-sm);
+  background: var(--color-page);
+}
+
+.financial-education-catalog,
+.financial-education-article {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.financial-education-title,
+.financial-education-subtitle {
+  text-align: center;
+}
+
+.financial-education-title,
+.financial-education-article__title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
+.financial-education-subtitle {
+  max-width: 42rem;
+  margin: var(--space-sm) auto var(--space-lg);
+  color: var(--color-muted);
+}
+
+.financial-education-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+.financial-education-card {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.15rem var(--space-sm);
+  min-height: 6rem;
+  padding: var(--space-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-align: left;
+  box-shadow: var(--shadow-soft);
+}
+
+.financial-education-card:hover,
+.financial-education-card:focus-visible {
+  border-color: var(--color-finance-action-border);
+  background: var(--color-finance-action);
+  outline: 3px solid transparent;
+}
+
+.financial-education-card__icon {
+  grid-row: 1 / span 2;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.financial-education-card__title {
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+.financial-education-card__description {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.financial-education-disclaimer {
+  max-width: 44rem;
+  margin: var(--space-lg) auto 0;
+  color: var(--color-muted);
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.financial-education-article {
+  max-width: 46rem;
+  padding-bottom: var(--space-xl);
+}
+
+.financial-education-article__title {
+  margin-bottom: var(--space-sm);
+}
+
+.financial-education-introduction {
+  color: var(--color-muted);
+  font-size: 1.02rem;
+}
+
+.financial-education-section {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.financial-education-section__title {
+  margin: 0 0 var(--space-sm);
+  font-size: 1.08rem;
+}
+
+.financial-education-list {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.financial-education-list--mistakes {
+  list-style: square;
+}
+
+.financial-education-list--plain {
+  padding-left: 0;
+  list-style: none;
+  font-weight: 650;
+}
+
+.financial-education-checklist {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.financial-education-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-height: var(--touch-min);
+  padding: 0.65rem;
+  border-radius: 0.65rem;
+  background: var(--color-page);
+  cursor: pointer;
+}
+
+.financial-education-check input {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--color-finance-action-border);
+}
+
+.financial-education-check.is-checked span {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+@media (min-width: 42rem) {
+  .financial-education-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .financial-education-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

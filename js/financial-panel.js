@@ -228,6 +228,15 @@ window.JapaFinancialPanel = {
     );
     root.append(addBtn);
 
+    const readBtn = document.createElement("button");
+    readBtn.type = "button";
+    readBtn.className = "btn btn--reset financial-read-btn";
+    readBtn.textContent = "Read This";
+    readBtn.addEventListener("click", function () {
+      window.JapaFinancialEducationPanel.open(readBtn);
+    });
+    root.append(readBtn);
+
     const calculatorBtn = document.createElement("button");
     calculatorBtn.type = "button";
     calculatorBtn.className = "btn btn--reset financial-calculator-btn";
