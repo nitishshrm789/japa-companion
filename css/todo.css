@@ -116,6 +116,7 @@
   z-index: 300;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   background: var(--color-page);
   padding:
     max(0.75rem, env(safe-area-inset-top))
@@ -165,7 +166,8 @@
 }
 
 .todo-field input[type="text"],
-.todo-field input[type="date"] {
+.todo-field input[type="date"],
+.todo-field input[type="time"] {
   width: 100%;
   border: none;
   border-bottom: 2px solid var(--color-border);
@@ -183,6 +185,10 @@
 }
 
 .todo-date-wrap input[type="date"] {
+  color-scheme: light;
+}
+
+.todo-field input[type="time"] {
   color-scheme: light;
 }
 

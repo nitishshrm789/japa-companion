@@ -35,6 +35,20 @@ window.JapaTodoPanel = {
     return dateKey < today;
   },
 
+  formatTime(timeValue) {
+    const parts = String(timeValue || "").split(":");
+    if (parts.length !== 2) {
+      return timeValue;
+    }
+
+    const date = new Date();
+    date.setHours(Number(parts[0]), Number(parts[1]), 0, 0);
+    return date.toLocaleTimeString(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  },
+
   drawList() {
     const root = this.root;
     root.replaceChildren();
@@ -80,6 +94,13 @@ window.JapaTodoPanel = {
     dateLabel.className = "todo-card__date";
     dateLabel.textContent =
       "Date: " + window.JapaTime.formatDateLabel(task.dateKey);
+    if (task.startTime && task.endTime) {
+      dateLabel.textContent +=
+        " · Time: " +
+        this.formatTime(task.startTime) +
+        " – " +
+        this.formatTime(task.endTime);
+    }
 
     const row = document.createElement("div");
     row.className = "todo-card__row";
@@ -214,6 +235,27 @@ window.JapaTodoPanel = {
     dateWrap.append(dateInput);
     dateField.append(dateLabel, dateWrap);
 
+    function createTimeField(name, labelText) {
+      const field = document.createElement("label");
+      field.className = "todo-field todo-field--time";
+      field.setAttribute("for", "todo-field-" + name);
+
+      const label = document.createElement("span");
+      label.textContent = labelText;
+
+      const input = document.createElement("input");
+      input.id = "todo-field-" + name;
+      input.name = name;
+      input.type = "time";
+      input.step = "60";
+
+      field.append(label, input);
+      return { field: field, input: input };
+    }
+
+    const startTimeField = createTimeField("start-time", "Start Time");
+    const endTimeField = createTimeField("end-time", "End Time");
+
     const confirmBtn = document.createElement("button");
     confirmBtn.type = "submit";
     confirmBtn.className = "todo-confirm";
@@ -225,14 +267,25 @@ window.JapaTodoPanel = {
     function updateConfirmVisibility() {
       const text = String(taskInput.value || "").trim();
       const dateKey = String(dateInput.value || "").trim();
-      confirmBtn.hidden = !(text && dateKey);
+      const startTime = String(startTimeField.input.value || "").trim();
+      const endTime = String(endTimeField.input.value || "").trim();
+      confirmBtn.hidden = !(text && dateKey && startTime && endTime);
     }
 
     taskInput.addEventListener("input", updateConfirmVisibility);
     dateInput.addEventListener("change", updateConfirmVisibility);
     dateInput.addEventListener("input", updateConfirmVisibility);
+    startTimeField.input.addEventListener("input", updateConfirmVisibility);
+    endTimeField.input.addEventListener("input", updateConfirmVisibility);
 
-    form.append(heading, taskField, dateField, confirmBtn);
+    form.append(
+      heading,
+      taskField,
+      dateField,
+      startTimeField.field,
+      endTimeField.field,
+      confirmBtn
+    );
 
     form.addEventListener(
       "submit",
@@ -240,9 +293,11 @@ window.JapaTodoPanel = {
         event.preventDefault();
         const text = String(taskInput.value || "").trim();
         const dateKey = String(dateInput.value || "").trim();
+        const startTime = String(startTimeField.input.value || "").trim();
+        const endTime = String(endTimeField.input.value || "").trim();
         const today = window.JapaTime.getLocalDateKey();
 
-        if (!text || !dateKey) {
+        if (!text || !dateKey || !startTime || !endTime) {
           return;
         }
 
@@ -252,10 +307,18 @@ window.JapaTodoPanel = {
           return;
         }
 
+        if (endTime <= startTime) {
+          window.alert("End Time should be after Start Time.");
+          endTimeField.input.focus();
+          return;
+        }
+
         this.tasks.push({
           id: window.JapaTodoStore.createId(),
           text: text,
           dateKey: dateKey,
+          startTime: startTime,
+          endTime: endTime,
           createdAt: Date.now(),
         });
         this.persist();

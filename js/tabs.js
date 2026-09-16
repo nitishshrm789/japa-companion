@@ -20,6 +20,50 @@ window.JapaTabs = {
     health: "Health",
   },
 
+  STAR_SCHEDULES: [
+    {
+      startMinutes: 4 * 60,
+      endMinutes: 10 * 60 + 30,
+      tabs: ["clock", "photos", "mm", "result"],
+    },
+    {
+      startMinutes: 10 * 60,
+      endMinutes: 22 * 60,
+      tabs: ["clock", "hearing", "todo", "progress", "health"],
+    },
+  ],
+
+  getStarredTabs(date) {
+    const now = date || new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const starredTabs = {};
+
+    this.STAR_SCHEDULES.forEach(function (schedule) {
+      if (
+        currentMinutes >= schedule.startMinutes &&
+        currentMinutes < schedule.endMinutes
+      ) {
+        schedule.tabs.forEach(function (tabName) {
+          starredTabs[tabName] = true;
+        });
+      }
+    });
+
+    return starredTabs;
+  },
+
+  updateMenuStars(buttons, date) {
+    const starredTabs = this.getStarredTabs(date);
+
+    buttons.forEach(
+      function (button) {
+        const tabName = button.getAttribute("data-tab");
+        const label = this.LABELS[tabName] || tabName;
+        button.textContent = label + (starredTabs[tabName] ? " ⭐" : "");
+      }.bind(this)
+    );
+  },
+
   init(options) {
     const buttons = Array.prototype.slice.call(
       document.querySelectorAll("[data-tab]")
@@ -135,6 +179,22 @@ window.JapaTabs = {
         closeMenu();
       }
     });
+
+    this.updateMenuStars(buttons);
+    window.setInterval(
+      function () {
+        this.updateMenuStars(buttons);
+      }.bind(this),
+      60000
+    );
+    document.addEventListener(
+      "visibilitychange",
+      function () {
+        if (!document.hidden) {
+          this.updateMenuStars(buttons);
+        }
+      }.bind(this)
+    );
 
     // First load: show Clock, keep menu closed.
     activate(options.initialTab || "clock", false);
