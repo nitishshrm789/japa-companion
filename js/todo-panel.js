@@ -1,5 +1,5 @@
 /**
- * To Do List — add tasks with date, complete via checkbox, remove overdue.
+ * To Do List — add tasks with date, complete via checkbox, remove or re-add overdue.
  */
 window.JapaTodoPanel = {
   render(rootElement) {
@@ -121,8 +121,24 @@ window.JapaTodoPanel = {
     text.textContent = task.text;
 
     row.append(check, text);
+    card.append(dateLabel, row);
 
     if (overdue) {
+      const actions = document.createElement("div");
+      actions.className = "todo-card__actions";
+
+      const reAddBtn = document.createElement("button");
+      reAddBtn.type = "button";
+      reAddBtn.className = "todo-readd";
+      reAddBtn.textContent = "Re-Add";
+      reAddBtn.setAttribute("aria-label", "Re-add this task for today");
+      reAddBtn.addEventListener(
+        "click",
+        function () {
+          this.reAddTask(task.id);
+        }.bind(this)
+      );
+
       const removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.className = "todo-remove";
@@ -133,10 +149,11 @@ window.JapaTodoPanel = {
           this.removeTask(task.id);
         }.bind(this)
       );
-      row.append(removeBtn);
+
+      actions.append(reAddBtn, removeBtn);
+      card.append(actions);
     }
 
-    card.append(dateLabel, row);
     return card;
   },
 
@@ -151,6 +168,25 @@ window.JapaTodoPanel = {
   removeTask(id) {
     this.tasks = this.tasks.filter(function (task) {
       return task.id !== id;
+    });
+    this.persist();
+    this.drawList();
+  },
+
+  reAddTask(id) {
+    const today = window.JapaTime.getLocalDateKey();
+    this.tasks = this.tasks.map(function (task) {
+      if (task.id !== id) {
+        return task;
+      }
+      return {
+        id: task.id,
+        text: task.text,
+        dateKey: today,
+        startTime: task.startTime,
+        endTime: task.endTime,
+        createdAt: Date.now(),
+      };
     });
     this.persist();
     this.drawList();

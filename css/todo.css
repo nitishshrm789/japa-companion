@@ -69,18 +69,34 @@
   text-decoration-thickness: 0.08em;
 }
 
+.todo-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+
+.todo-readd,
 .todo-remove {
   flex-shrink: 0;
   min-height: 2rem;
   padding: 0.3rem 0.65rem;
-  border: 2px solid var(--color-delete);
   border-radius: var(--radius-btn);
   background: #fff;
-  color: var(--color-delete);
   font-size: 0.85rem;
   font-weight: 700;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+.todo-readd {
+  border: 2px solid var(--color-start);
+  color: var(--color-start);
+}
+
+.todo-remove {
+  border: 2px solid var(--color-delete);
+  color: var(--color-delete);
 }
 
 .todo-fab {
