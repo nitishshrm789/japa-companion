@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Digital Fullscreen Smoke</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/results.css" />
+    <link rel="stylesheet" href="../css/digital-counter.css" />
+  </head>
+  <body>
+    <div id="panel-digital">
+      <div class="digital-counter">
+        <div class="digital-bead-wrap">
+          <button type="button" id="digital-bead" class="digital-bead">
+            <span id="digital-bead-value" class="digital-bead__value">0</span>
+          </button>
+        </div>
+        <section
+          id="digital-timer-panel"
+          class="digital-timer-panel is-tappable"
+          tabindex="0"
+        >
+          <div id="digital-timer-display" class="digital-timer-display">00:00</div>
+          <p id="digital-round-progress" class="digital-round-progress">
+            0 / 16 complete
+          </p>
+        </section>
+        <section class="controls">
+          <button type="button" id="btn-digital-start" class="btn btn--start">
+            Start
+          </button>
+          <button type="button" id="btn-digital-stop" class="btn btn--stop">
+            Stop
+          </button>
+          <button type="button" id="btn-digital-reset" class="btn btn--reset">
+            Reset
+          </button>
+        </section>
+        <section class="rounds-panel">
+          <ul id="digital-rounds-list" class="rounds-list"></ul>
+          <p id="digital-rounds-empty" class="rounds-empty"></p>
+        </section>
+        <button type="button" id="btn-digital-clear">Clear</button>
+        <button type="button" id="btn-digital-save-day">Save Day</button>
+      </div>
+    </div>
+
+    <div id="digital-fullscreen" class="digital-fullscreen" hidden>
+      <div class="digital-fullscreen__bar">
+        <button type="button" id="digital-fullscreen-close">Back</button>
+      </div>
+      <div class="digital-fullscreen__body">
+        <button type="button" id="digital-fs-bead" class="digital-bead">
+          <span id="digital-fs-bead-value" class="digital-bead__value">0</span>
+        </button>
+        <div id="digital-fs-timer" class="digital-fullscreen__timer">00:00</div>
+        <p id="digital-fs-progress" class="digital-fullscreen__progress">
+          0 / 16 complete
+        </p>
+        <p class="digital-fullscreen__help">
+          Tap the circle for each mantra (108 = 1 round). Timer starts on first
+          tap or Start.
+        </p>
+        <div class="digital-fullscreen__controls">
+          <button type="button" id="digital-fs-start" class="btn btn--start">
+            Start
+          </button>
+          <button type="button" id="digital-fs-stop" class="btn btn--stop">
+            Stop
+          </button>
+          <button type="button" id="digital-fs-reset" class="btn btn--reset">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <pre id="out">WAITING</pre>
+
+    <script src="../js/format-time.js"></script>
+    <script src="../js/date-utils.js"></script>
+    <script src="../js/stopwatch.js"></script>
+    <script src="../js/rounds-list.js"></script>
+    <script src="../js/digital-results-store.js"></script>
+    <script src="../js/digital-counter-store.js"></script>
+    <script src="../js/digital-counter-fullscreen.js"></script>
+    <script src="../js/digital-counter-panel.js"></script>
+    <script>
+      window.addEventListener("load", function () {
+        localStorage.removeItem("japa-digital-counter-session-v1");
+        window.JapaDigitalCounterPanel.render(
+          document.getElementById("panel-digital")
+        );
+
+        document.getElementById("digital-timer-panel").click();
+        const opened = window.JapaDigitalCounterFullscreen.isOpen();
+        const hasCounter = !!document.getElementById("digital-fs-bead");
+        const hasTimer = !!document.getElementById("digital-fs-timer");
+        const hasHelp = document
+          .querySelector(".digital-fullscreen__help")
+          .textContent.indexOf("108 = 1 round") !== -1;
+        const hasButtons =
+          !!document.getElementById("digital-fs-start") &&
+          !!document.getElementById("digital-fs-stop") &&
+          !!document.getElementById("digital-fs-reset");
+
+        document.getElementById("digital-fs-bead").click();
+        const beadSynced =
+          document.getElementById("digital-fs-bead-value").textContent ===
+            "1" &&
+          document.getElementById("digital-bead-value").textContent === "1";
+
+        document.getElementById("digital-fullscreen-close").click();
+        const closed = !window.JapaDigitalCounterFullscreen.isOpen();
+
+        const passed =
+          opened && hasCounter && hasTimer && hasHelp && hasButtons && beadSynced && closed;
+        document.title = passed ? "PASS" : "FAIL";
+        document.getElementById("out").textContent = JSON.stringify({
+          opened: opened,
+          hasCounter: hasCounter,
+          hasTimer: hasTimer,
+          hasHelp: hasHelp,
+          hasButtons: hasButtons,
+          beadSynced: beadSynced,
+          closed: closed,
+        });
+      });
+    </script>
+  </body>
+</html>

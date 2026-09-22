@@ -18,10 +18,38 @@ window.JapaDigitalCounterPanel = {
   ensureDom() {
     this.beadBtn = document.getElementById("digital-bead");
     this.beadValue = document.getElementById("digital-bead-value");
+    this.timerPanel = document.getElementById("digital-timer-panel");
     this.timerDisplay = document.getElementById("digital-timer-display");
     this.roundProgress = document.getElementById("digital-round-progress");
     this.roundsListEl = document.getElementById("digital-rounds-list");
     this.roundsEmptyEl = document.getElementById("digital-rounds-empty");
+  },
+
+  fullscreenOptions() {
+    const self = this;
+    return {
+      getBeadCount: function () {
+        return self.beadCount || 0;
+      },
+      getElapsed: function () {
+        return self.stopwatch ? self.stopwatch.getElapsed() : 0;
+      },
+      getProgressText: function () {
+        return self.roundProgress ? self.roundProgress.textContent : "";
+      },
+      onBeadPress: function () {
+        self.onBeadPress();
+      },
+      onStart: function () {
+        self.startTimer();
+      },
+      onStop: function () {
+        self.stopTimer();
+      },
+      onReset: function () {
+        self.resetBeadAndTimer();
+      },
+    };
   },
 
   ensureEngine() {
@@ -29,9 +57,15 @@ window.JapaDigitalCounterPanel = {
 
     if (!this.stopwatch) {
       this.stopwatch = window.JapaStopwatch.create(function onTick(elapsedMs) {
+        const text = window.JapaTime.formatElapsed(elapsedMs);
         if (self.timerDisplay) {
-          self.timerDisplay.textContent =
-            window.JapaTime.formatElapsed(elapsedMs);
+          self.timerDisplay.textContent = text;
+        }
+        if (
+          window.JapaDigitalCounterFullscreen &&
+          window.JapaDigitalCounterFullscreen.isOpen()
+        ) {
+          window.JapaDigitalCounterFullscreen.sync();
         }
       });
     }
@@ -46,6 +80,10 @@ window.JapaDigitalCounterPanel = {
         },
         { startNumber: 1, maxRounds: self.MAX_ROUNDS }
       );
+    }
+
+    if (window.JapaDigitalCounterFullscreen && !window.JapaDigitalCounterFullscreen.ready) {
+      window.JapaDigitalCounterFullscreen.init(this.fullscreenOptions());
     }
 
     if (this.listenersBound) {
@@ -68,6 +106,18 @@ window.JapaDigitalCounterPanel = {
     this.beadBtn.addEventListener("click", function () {
       self.onBeadPress();
     });
+
+    if (this.timerPanel) {
+      this.timerPanel.addEventListener("click", function () {
+        self.openFullscreen();
+      });
+      this.timerPanel.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          self.openFullscreen();
+        }
+      });
+    }
 
     document
       .getElementById("btn-digital-start")
@@ -95,6 +145,14 @@ window.JapaDigitalCounterPanel = {
       .addEventListener("click", function () {
         self.saveDay();
       });
+  },
+
+  openFullscreen() {
+    if (!window.JapaDigitalCounterFullscreen) {
+      return;
+    }
+    window.JapaDigitalCounterFullscreen.init(this.fullscreenOptions());
+    window.JapaDigitalCounterFullscreen.open(this.fullscreenOptions());
   },
 
   restoreSession() {
@@ -155,6 +213,12 @@ window.JapaDigitalCounterPanel = {
       );
     }
     this.syncProgress();
+    if (
+      window.JapaDigitalCounterFullscreen &&
+      window.JapaDigitalCounterFullscreen.isOpen()
+    ) {
+      window.JapaDigitalCounterFullscreen.sync();
+    }
   },
 
   syncProgress() {

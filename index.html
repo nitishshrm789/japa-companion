@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/book-reading.css?v=3" />
     <link rel="stylesheet" href="css/hearing.css?v=3" />
     <link rel="stylesheet" href="css/personalities.css?v=1" />
-    <link rel="stylesheet" href="css/digital-counter.css?v=1" />
+    <link rel="stylesheet" href="css/digital-counter.css?v=2" />
     <link rel="stylesheet" href="css/todo.css?v=3" />
     <link rel="stylesheet" href="css/progress.css?v=1" />
     <link rel="stylesheet" href="css/expense.css?v=1" />
@@ -76,8 +76,10 @@
           </div>
 
           <section
-            class="digital-timer-panel"
-            aria-label="Digital counter timer"
+            id="digital-timer-panel"
+            class="digital-timer-panel is-tappable"
+            aria-label="Digital counter timer. Tap to open full screen."
+            tabindex="0"
           >
             <div
               id="digital-timer-display"
@@ -95,6 +97,7 @@
             >
               0 / 16 complete
             </p>
+            <p class="digital-timer-panel__tap-hint">Tap for full screen</p>
           </section>
 
           <p class="digital-help">
@@ -735,6 +738,67 @@
     </div>
 
     <div
+      id="digital-fullscreen"
+      class="digital-fullscreen"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Full screen digital counter"
+    >
+      <div class="digital-fullscreen__bar">
+        <button
+          type="button"
+          id="digital-fullscreen-close"
+          class="digital-fullscreen__close"
+          aria-label="Close full screen digital counter"
+        >
+          Back
+        </button>
+      </div>
+      <div class="digital-fullscreen__body">
+        <button
+          type="button"
+          id="digital-fs-bead"
+          class="digital-bead digital-fullscreen__bead"
+          aria-label="Count one mantra bead"
+        >
+          <span id="digital-fs-bead-value" class="digital-bead__value">0</span>
+        </button>
+        <div
+          id="digital-fs-timer"
+          class="digital-fullscreen__timer"
+          role="timer"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          00:00
+        </div>
+        <p
+          id="digital-fs-progress"
+          class="digital-fullscreen__progress"
+          aria-live="polite"
+        >
+          0 / 16 complete
+        </p>
+        <p class="digital-fullscreen__help">
+          Tap the circle for each mantra (108 = 1 round). Timer starts on first
+          tap or Start.
+        </p>
+        <div class="digital-fullscreen__controls">
+          <button type="button" id="digital-fs-start" class="btn btn--start">
+            Start
+          </button>
+          <button type="button" id="digital-fs-stop" class="btn btn--stop">
+            Stop
+          </button>
+          <button type="button" id="digital-fs-reset" class="btn btn--reset">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
       id="read-fullscreen"
       class="read-fullscreen"
       hidden
@@ -817,7 +881,8 @@
     <script src="js/results-store.js?v=3"></script>
     <script src="js/digital-results-store.js?v=1"></script>
     <script src="js/digital-counter-store.js?v=1"></script>
-    <script src="js/digital-counter-panel.js?v=2"></script>
+    <script src="js/digital-counter-fullscreen.js?v=1"></script>
+    <script src="js/digital-counter-panel.js?v=3"></script>
     <script src="js/quotes-data.js?v=3"></script>
     <script src="js/mantra-data.js?v=3"></script>
     <script src="js/photos-data.js?v=3"></script>
