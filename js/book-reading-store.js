@@ -4,6 +4,11 @@
 window.JapaBookStore = {
   KEY: "japa-book-reading-v2",
 
+  toInt(value, fallback) {
+    const n = parseInt(value, 10);
+    return isFinite(n) ? n : fallback;
+  },
+
   load() {
     try {
       const raw = localStorage.getItem(this.KEY);
@@ -25,9 +30,14 @@ window.JapaBookStore = {
             chapter: String(entry.chapter || "").trim(),
             link: String(entry.link || "").trim(),
             para: String(entry.para || "").trim(),
+            chaptersCompleted: Math.max(
+              0,
+              this.toInt(entry.chaptersCompleted, 0)
+            ),
+            chaptersTotal: Math.max(0, this.toInt(entry.chaptersTotal, 0)),
             order: typeof entry.order === "number" ? entry.order : index + 1,
           };
-        })
+        }.bind(this))
         .sort(function (a, b) {
           return a.order - b.order;
         });
@@ -46,8 +56,10 @@ window.JapaBookStore = {
           chapter: entry.chapter,
           link: entry.link,
           para: entry.para,
+          chaptersCompleted: Math.max(0, this.toInt(entry.chaptersCompleted, 0)),
+          chaptersTotal: Math.max(0, this.toInt(entry.chaptersTotal, 0)),
         };
-      });
+      }.bind(this));
       localStorage.setItem(this.KEY, JSON.stringify(normalized));
       return normalized;
     } catch (error) {

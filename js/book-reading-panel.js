@@ -32,6 +32,33 @@ window.JapaBookPanel = {
     this.entries = window.JapaBookStore.save(this.entries);
   },
 
+  calcProgress(entry) {
+    const completed = Math.max(0, entry.chaptersCompleted || 0);
+    const total = Math.max(0, entry.chaptersTotal || 0);
+
+    if (total <= 0) {
+      return {
+        percent: 0,
+        status: "unset",
+        statusLabel: "Set chapter totals",
+        hasTotal: false,
+      };
+    }
+
+    const percent = Math.min(
+      100,
+      Math.round((completed / total) * 1000) / 10
+    );
+    const done = completed >= total;
+
+    return {
+      percent: percent,
+      status: done ? "done" : "on-track",
+      statusLabel: done ? "Completed" : "On track",
+      hasTotal: true,
+    };
+  },
+
   drawList() {
     const root = this.root;
     root.replaceChildren();
@@ -74,8 +101,9 @@ window.JapaBookPanel = {
   },
 
   buildCard(entry, index) {
+    const stats = this.calcProgress(entry);
     const card = document.createElement("article");
-    card.className = "book-card box";
+    card.className = "book-card box is-" + stats.status;
 
     const top = document.createElement("div");
     top.className = "book-card__top";
@@ -132,6 +160,44 @@ window.JapaBookPanel = {
     para.className = "book-card__para";
     para.textContent = entry.para || "—";
 
+    const badge = document.createElement("p");
+    badge.className = "book-card__badge";
+    if (stats.hasTotal) {
+      badge.textContent = stats.statusLabel + " · " + stats.percent + "% done";
+    } else {
+      badge.textContent = stats.statusLabel;
+    }
+
+    const bar = document.createElement("div");
+    bar.className = "book-progress-bar";
+    bar.setAttribute("role", "progressbar");
+    bar.setAttribute("aria-valuemin", "0");
+    bar.setAttribute("aria-valuemax", "100");
+    bar.setAttribute("aria-valuenow", String(stats.percent));
+    bar.setAttribute(
+      "aria-label",
+      stats.hasTotal
+        ? stats.percent + "% of chapters complete"
+        : "Chapter totals not set"
+    );
+
+    const fill = document.createElement("div");
+    fill.className = "book-progress-bar__fill";
+    fill.style.width = stats.percent + "%";
+    bar.append(fill);
+
+    const meta = document.createElement("p");
+    meta.className = "book-card__meta";
+    if (stats.hasTotal) {
+      meta.textContent =
+        (entry.chaptersCompleted || 0) +
+        " / " +
+        entry.chaptersTotal +
+        " chapters";
+    } else {
+      meta.textContent = "Edit to add chapter totals";
+    }
+
     const footer = document.createElement("div");
     footer.className = "book-card__footer";
 
@@ -151,7 +217,7 @@ window.JapaBookPanel = {
       footer.append(noLink);
     }
 
-    card.append(top, bookName, chapter, para, footer);
+    card.append(top, bookName, chapter, para, badge, bar, meta, footer);
     return card;
   },
 
@@ -224,6 +290,22 @@ window.JapaBookPanel = {
         "Para (5–6 words to continue from)",
         editing ? editing.para : "",
         "text"
+      ),
+      this.field(
+        "chaptersCompleted",
+        "Total no of Chapter Completed",
+        editing ? String(editing.chaptersCompleted || 0) : "",
+        "number",
+        { min: "0", step: "1", inputmode: "numeric" }
+      ),
+      this.field(
+        "chaptersTotal",
+        "Total no of Chapters in this Book",
+        editing && editing.chaptersTotal
+          ? String(editing.chaptersTotal)
+          : "",
+        "number",
+        { min: "1", step: "1", inputmode: "numeric" }
       )
     );
 
@@ -242,9 +324,38 @@ window.JapaBookPanel = {
         const chapter = String(data.get("chapter") || "").trim();
         const link = String(data.get("link") || "").trim();
         const para = String(data.get("para") || "").trim();
+        const completedRaw = String(data.get("chaptersCompleted") || "").trim();
+        const totalRaw = String(data.get("chaptersTotal") || "").trim();
 
         if (!bookName || !chapter) {
           window.alert("Please fill Book Name and Chapter.");
+          return;
+        }
+
+        if (!completedRaw || !totalRaw) {
+          window.alert(
+            "Please fill Total no of Chapter Completed and Total no of Chapters in this Book."
+          );
+          return;
+        }
+
+        if (!/^\d+$/.test(completedRaw) || !/^\d+$/.test(totalRaw)) {
+          window.alert("Chapter counts must be whole numbers (integers).");
+          return;
+        }
+
+        const chaptersCompleted = parseInt(completedRaw, 10);
+        const chaptersTotal = parseInt(totalRaw, 10);
+
+        if (chaptersTotal < 1) {
+          window.alert("Total chapters in this book must be at least 1.");
+          return;
+        }
+
+        if (chaptersCompleted > chaptersTotal) {
+          window.alert(
+            "Chapters completed cannot be more than total chapters in this book."
+          );
           return;
         }
 
@@ -265,6 +376,8 @@ window.JapaBookPanel = {
               chapter: chapter,
               link: link,
               para: para,
+              chaptersCompleted: chaptersCompleted,
+              chaptersTotal: chaptersTotal,
             };
           });
         } else {
@@ -275,6 +388,8 @@ window.JapaBookPanel = {
             chapter: chapter,
             link: link,
             para: para,
+            chaptersCompleted: chaptersCompleted,
+            chaptersTotal: chaptersTotal,
           });
         }
 
@@ -287,7 +402,7 @@ window.JapaBookPanel = {
     screen.append(bar, form);
   },
 
-  field(name, labelText, value, type) {
+  field(name, labelText, value, type, options) {
     const label = document.createElement("label");
     label.className = "book-field";
     label.setAttribute("for", "book-field-" + name);
@@ -301,6 +416,18 @@ window.JapaBookPanel = {
     input.type = type || "text";
     input.value = value || "";
     input.autocomplete = "off";
+
+    if (options) {
+      if (options.min !== undefined) {
+        input.min = options.min;
+      }
+      if (options.step !== undefined) {
+        input.step = options.step;
+      }
+      if (options.inputmode) {
+        input.setAttribute("inputmode", options.inputmode);
+      }
+    }
 
     label.append(span, input);
     return label;
