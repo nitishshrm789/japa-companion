@@ -31,6 +31,74 @@ window.JapaHearingPanel = {
     this.entries = window.JapaHearingStore.save(this.entries);
   },
 
+  /**
+   * Accepts m:ss, mm:ss, h:mm:ss, or hh:mm:ss → seconds (or null if invalid).
+   */
+  parseTimeStamp(value) {
+    const text = String(value || "").trim();
+    if (!text) {
+      return null;
+    }
+    if (!/^\d{1,2}(:\d{1,2}){1,2}$/.test(text)) {
+      return null;
+    }
+
+    const parts = text.split(":").map(function (part) {
+      return parseInt(part, 10);
+    });
+
+    for (let i = 0; i < parts.length; i += 1) {
+      if (!isFinite(parts[i]) || parts[i] < 0) {
+        return null;
+      }
+    }
+
+    if (parts.length === 2) {
+      const minutes = parts[0];
+      const seconds = parts[1];
+      if (seconds > 59) {
+        return null;
+      }
+      return minutes * 60 + seconds;
+    }
+
+    const hours = parts[0];
+    const minutes = parts[1];
+    const seconds = parts[2];
+    if (minutes > 59 || seconds > 59) {
+      return null;
+    }
+    return hours * 3600 + minutes * 60 + seconds;
+  },
+
+  calcProgress(entry) {
+    const currentSec = this.parseTimeStamp(entry.timeStamp);
+    const totalSec = this.parseTimeStamp(entry.totalTimeStamp);
+
+    if (totalSec === null || totalSec <= 0) {
+      return {
+        percent: 0,
+        status: "unset",
+        statusLabel: "Set total time-stamp",
+        hasTotal: false,
+      };
+    }
+
+    const current = currentSec === null ? 0 : Math.min(currentSec, totalSec);
+    const percent = Math.min(
+      100,
+      Math.round((current / totalSec) * 1000) / 10
+    );
+    const done = current >= totalSec;
+
+    return {
+      percent: percent,
+      status: done ? "done" : "on-track",
+      statusLabel: done ? "Completed" : "On track",
+      hasTotal: true,
+    };
+  },
+
   drawList() {
     const root = this.root;
     root.replaceChildren();
@@ -73,8 +141,9 @@ window.JapaHearingPanel = {
   },
 
   buildCard(entry, index) {
+    const stats = this.calcProgress(entry);
     const card = document.createElement("article");
-    card.className = "hearing-card box";
+    card.className = "hearing-card box is-" + stats.status;
 
     const top = document.createElement("div");
     top.className = "hearing-card__top";
@@ -127,6 +196,41 @@ window.JapaHearingPanel = {
     stamp.className = "hearing-card__stamp";
     stamp.textContent = "Time-stamp: " + (entry.timeStamp || "—");
 
+    const badge = document.createElement("p");
+    badge.className = "hearing-card__badge";
+    if (stats.hasTotal) {
+      badge.textContent = stats.statusLabel + " · " + stats.percent + "% done";
+    } else {
+      badge.textContent = stats.statusLabel;
+    }
+
+    const bar = document.createElement("div");
+    bar.className = "hearing-progress-bar";
+    bar.setAttribute("role", "progressbar");
+    bar.setAttribute("aria-valuemin", "0");
+    bar.setAttribute("aria-valuemax", "100");
+    bar.setAttribute("aria-valuenow", String(stats.percent));
+    bar.setAttribute(
+      "aria-label",
+      stats.hasTotal
+        ? stats.percent + "% of lecture heard"
+        : "Total time-stamp not set"
+    );
+
+    const fill = document.createElement("div");
+    fill.className = "hearing-progress-bar__fill";
+    fill.style.width = stats.percent + "%";
+    bar.append(fill);
+
+    const meta = document.createElement("p");
+    meta.className = "hearing-card__meta";
+    if (stats.hasTotal) {
+      meta.textContent =
+        (entry.timeStamp || "0:00") + " / " + entry.totalTimeStamp;
+    } else {
+      meta.textContent = "Edit to add total time-stamp";
+    }
+
     const footer = document.createElement("div");
     footer.className = "hearing-card__footer";
 
@@ -146,7 +250,7 @@ window.JapaHearingPanel = {
       footer.append(noLink);
     }
 
-    card.append(top, title, stamp, footer);
+    card.append(top, title, stamp, badge, bar, meta, footer);
     return card;
   },
 
@@ -216,6 +320,12 @@ window.JapaHearingPanel = {
         "Time-Stamp (e.g. 12:45)",
         editing ? editing.timeStamp : "",
         "text"
+      ),
+      this.field(
+        "totalTimeStamp",
+        "Total Time-Stamp (e.g. 01:12:45)",
+        editing ? editing.totalTimeStamp : "",
+        "text"
       )
     );
 
@@ -233,9 +343,39 @@ window.JapaHearingPanel = {
         const lectureName = String(data.get("lectureName") || "").trim();
         const link = String(data.get("link") || "").trim();
         const timeStamp = String(data.get("timeStamp") || "").trim();
+        const totalTimeStamp = String(data.get("totalTimeStamp") || "").trim();
 
         if (!lectureName) {
           window.alert("Please fill Lecture Name.");
+          return;
+        }
+
+        if (!timeStamp || !totalTimeStamp) {
+          window.alert("Please fill Time-Stamp and Total Time-Stamp.");
+          return;
+        }
+
+        const currentSec = this.parseTimeStamp(timeStamp);
+        const totalSec = this.parseTimeStamp(totalTimeStamp);
+
+        if (currentSec === null) {
+          window.alert(
+            "Time-Stamp should look like 12:45 or 1:12:45 (mm:ss or hh:mm:ss)."
+          );
+          return;
+        }
+
+        if (totalSec === null || totalSec <= 0) {
+          window.alert(
+            "Total Time-Stamp should look like 01:12:45 (mm:ss or hh:mm:ss)."
+          );
+          return;
+        }
+
+        if (currentSec > totalSec) {
+          window.alert(
+            "Time-Stamp cannot be later than Total Time-Stamp."
+          );
           return;
         }
 
@@ -255,6 +395,7 @@ window.JapaHearingPanel = {
               lectureName: lectureName,
               link: link,
               timeStamp: timeStamp,
+              totalTimeStamp: totalTimeStamp,
             };
           });
         } else {
@@ -264,6 +405,7 @@ window.JapaHearingPanel = {
             lectureName: lectureName,
             link: link,
             timeStamp: timeStamp,
+            totalTimeStamp: totalTimeStamp,
           });
         }
 

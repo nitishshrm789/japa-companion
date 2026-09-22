@@ -24,6 +24,7 @@ window.JapaHearingStore = {
             lectureName: String(entry.lectureName || "").trim(),
             link: String(entry.link || "").trim(),
             timeStamp: String(entry.timeStamp || "").trim(),
+            totalTimeStamp: String(entry.totalTimeStamp || "").trim(),
             order: typeof entry.order === "number" ? entry.order : index + 1,
           };
         })
@@ -44,6 +45,7 @@ window.JapaHearingStore = {
           lectureName: entry.lectureName,
           link: entry.link,
           timeStamp: entry.timeStamp,
+          totalTimeStamp: entry.totalTimeStamp,
         };
       });
       localStorage.setItem(this.KEY, JSON.stringify(normalized));
