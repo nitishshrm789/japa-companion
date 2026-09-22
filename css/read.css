@@ -131,10 +131,10 @@
 .read-fullscreen__mantra--mm {
   margin: 0;
   width: 100%;
-  font-size: clamp(2.75rem, 11vmin, 5.5rem);
-  line-height: 1.35;
+  font-size: clamp(3.25rem, 14vmin, 6.75rem);
+  line-height: 1.4;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 .read-fullscreen__list {
