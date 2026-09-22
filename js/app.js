@@ -293,6 +293,9 @@
       if (name === "gift") {
         window.JapaGiftPanel.render(document.getElementById("gift-root"));
       }
+      if (name === "slokas") {
+        window.JapaSlokaPanel.render(document.getElementById("slokas-root"));
+      }
       if (name === "financial") {
         window.JapaFinancialPanel.render(
           document.getElementById("financial-root")
@@ -321,6 +324,7 @@
     );
     window.JapaHealthPanel.render(document.getElementById("health-root"));
     window.JapaGiftPanel.render(document.getElementById("gift-root"));
+    window.JapaSlokaPanel.render(document.getElementById("slokas-root"));
     window.JapaFinancialPanel.render(document.getElementById("financial-root"));
     refreshResults();
   } catch (error) {

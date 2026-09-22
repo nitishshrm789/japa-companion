@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="css/expense.css?v=1" />
     <link rel="stylesheet" href="css/health.css?v=1" />
     <link rel="stylesheet" href="css/gift.css?v=1" />
+    <link rel="stylesheet" href="css/sloka.css?v=1" />
     <link rel="stylesheet" href="css/financial.css?v=5" />
     <link rel="stylesheet" href="css/financial-education.css?v=1" />
     <link rel="stylesheet" href="css/finance-calculators.css?v=1" />
@@ -486,6 +487,16 @@
       </section>
 
       <section
+        id="panel-slokas"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-slokas"
+        hidden
+      >
+        <div id="slokas-root" class="slokas-root"></div>
+      </section>
+
+      <section
         id="panel-financial"
         class="tab-panel"
         role="tabpanel"
@@ -718,6 +729,19 @@
             Gift
           </button>
         </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-slokas"
+            aria-controls="panel-slokas"
+            aria-selected="false"
+            data-tab="slokas"
+          >
+            Slokas
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -931,6 +955,8 @@
     <script src="js/health-panel.js?v=1"></script>
     <script src="js/gift-store.js?v=1"></script>
     <script src="js/gift-panel.js?v=1"></script>
+    <script src="js/sloka-store.js?v=1"></script>
+    <script src="js/sloka-panel.js?v=1"></script>
     <script src="js/financial-store.js?v=1"></script>
     <script src="js/finance-calculators/core.js?v=1"></script>
     <script src="js/finance-calculators/investment-growth.js?v=1"></script>
@@ -953,7 +979,7 @@
     <script src="js/financial-panel.js?v=7"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=14"></script>
-    <script src="js/app.js?v=13"></script>
+    <script src="js/tabs.js?v=15"></script>
+    <script src="js/app.js?v=14"></script>
   </body>
 </html>

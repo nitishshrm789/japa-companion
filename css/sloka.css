@@ -1,0 +1,254 @@
+.sloka-help {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-sm);
+}
+
+.sloka-add-btn {
+  width: 100%;
+  margin-bottom: var(--space-md);
+}
+
+.sloka-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.sloka-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-md);
+}
+
+.sloka-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: var(--space-md);
+  width: 100%;
+}
+
+.sloka-card__open {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.sloka-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.sloka-card__preview {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sloka-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.sloka-card__no-link {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.sloka-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.85rem;
+  border: 2px solid var(--color-reset);
+  border-radius: 999px;
+  color: var(--color-reset);
+  font-weight: 700;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sloka-link:active {
+  background: var(--color-reset);
+  color: #fff;
+}
+
+.sloka-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sloka-action-btn {
+  min-height: 2rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.85rem;
+  font-weight: 650;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.sloka-action-btn--danger {
+  color: var(--color-delete);
+  border-color: var(--color-delete);
+}
+
+.sloka-form-screen,
+.sloka-view-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-page);
+  padding:
+    max(0.75rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+
+.sloka-form-screen[hidden],
+.sloka-view-screen[hidden] {
+  display: none;
+}
+
+.sloka-form-screen__bar {
+  margin-bottom: var(--space-sm);
+}
+
+.sloka-form-screen__back {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: 700;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.sloka-form-screen__form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 28rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sloka-form-screen__title,
+.sloka-view__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.sloka-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 650;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.sloka-field input,
+.sloka-field textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.sloka-field textarea {
+  min-height: 8rem;
+  resize: vertical;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.sloka-view {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 32rem;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
+}
+
+.sloka-view__label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.sloka-view__sloka {
+  margin: 0;
+  white-space: pre-line;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.sloka-view__purport {
+  margin: 0;
+  white-space: pre-line;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+
+body.is-sloka-form-open,
+body.is-sloka-view-open {
+  overflow: hidden;
+}
+
+body.is-sloka-form-open .menu-toggle,
+body.is-sloka-view-open .menu-toggle {
+  visibility: hidden;
+}
