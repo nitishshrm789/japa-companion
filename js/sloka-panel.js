@@ -54,7 +54,7 @@ window.JapaSlokaPanel = {
     const help = document.createElement("p");
     help.className = "sloka-help";
     help.textContent =
-      "Save favorite slokas. Tap a box to read the verse and purport.";
+      "Save favorite slokas. Tap a box to read the verse and translation.";
     root.append(help);
 
     const addBtn = document.createElement("button");
@@ -283,9 +283,9 @@ window.JapaSlokaPanel = {
       this.field("name", "Sloka Name", editing ? editing.name : "", "text"),
       this.textAreaField("sloka", "Sloka", editing ? editing.sloka : "", 6),
       this.textAreaField(
-        "purport",
-        "Sloka Purport",
-        editing ? editing.purport : "",
+        "translation",
+        "Sloka Translation",
+        editing ? editing.translation : "",
         6
       ),
       this.field(
@@ -309,7 +309,7 @@ window.JapaSlokaPanel = {
         const data = new FormData(form);
         const name = String(data.get("name") || "").trim();
         const sloka = String(data.get("sloka") || "").trim();
-        const purport = String(data.get("purport") || "").trim();
+        const translation = String(data.get("translation") || "").trim();
         const link = String(data.get("link") || "").trim();
 
         if (!name || !sloka) {
@@ -331,7 +331,7 @@ window.JapaSlokaPanel = {
               id: item.id,
               name: name,
               sloka: sloka,
-              purport: purport,
+              translation: translation,
               link: link,
               createdAt: item.createdAt,
             };
@@ -341,7 +341,7 @@ window.JapaSlokaPanel = {
             id: window.JapaSlokaStore.createId(),
             name: name,
             sloka: sloka,
-            purport: purport,
+            translation: translation,
             link: link,
             createdAt: Date.now(),
           });
@@ -392,16 +392,16 @@ window.JapaSlokaPanel = {
 
     body.append(title, slokaLabel, slokaText);
 
-    if (item.purport) {
-      const purportLabel = document.createElement("h3");
-      purportLabel.className = "sloka-view__label";
-      purportLabel.textContent = "Sloka Purport";
+    if (item.translation) {
+      const translationLabel = document.createElement("h3");
+      translationLabel.className = "sloka-view__label";
+      translationLabel.textContent = "Sloka Translation";
 
-      const purportText = document.createElement("p");
-      purportText.className = "sloka-view__purport";
-      purportText.textContent = item.purport;
+      const translationText = document.createElement("p");
+      translationText.className = "sloka-view__translation";
+      translationText.textContent = item.translation;
 
-      body.append(purportLabel, purportText);
+      body.append(translationLabel, translationText);
     }
 
     screen.append(bar, body);

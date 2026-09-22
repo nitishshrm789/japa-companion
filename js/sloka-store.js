@@ -23,7 +23,7 @@ window.JapaSlokaStore = {
             id: item.id,
             name: String(item.name || "").trim(),
             sloka: String(item.sloka || "").trim(),
-            purport: String(item.purport || "").trim(),
+            translation: String(item.translation || item.purport || "").trim(),
             link: String(item.link || "").trim(),
             createdAt:
               typeof item.createdAt === "number" ? item.createdAt : Date.now(),
