@@ -18,6 +18,7 @@ window.JapaTabs = {
     expense: "Expense Manager",
     financial: "Financial",
     health: "Health",
+    gift: "Gift",
   },
 
   STAR_SCHEDULES: [
@@ -83,6 +84,7 @@ window.JapaTabs = {
       expense: document.getElementById("panel-expense"),
       personalities: document.getElementById("panel-personalities"),
       health: document.getElementById("panel-health"),
+      gift: document.getElementById("panel-gift"),
       financial: document.getElementById("panel-financial"),
     };
 

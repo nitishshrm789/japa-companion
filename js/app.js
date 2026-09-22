@@ -290,6 +290,9 @@
       if (name === "health") {
         window.JapaHealthPanel.render(document.getElementById("health-root"));
       }
+      if (name === "gift") {
+        window.JapaGiftPanel.render(document.getElementById("gift-root"));
+      }
       if (name === "financial") {
         window.JapaFinancialPanel.render(
           document.getElementById("financial-root")
@@ -317,6 +320,7 @@
       document.getElementById("personalities-root")
     );
     window.JapaHealthPanel.render(document.getElementById("health-root"));
+    window.JapaGiftPanel.render(document.getElementById("gift-root"));
     window.JapaFinancialPanel.render(document.getElementById("financial-root"));
     refreshResults();
   } catch (error) {

@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="css/progress.css?v=1" />
     <link rel="stylesheet" href="css/expense.css?v=1" />
     <link rel="stylesheet" href="css/health.css?v=1" />
+    <link rel="stylesheet" href="css/gift.css?v=1" />
     <link rel="stylesheet" href="css/financial.css?v=5" />
     <link rel="stylesheet" href="css/financial-education.css?v=1" />
     <link rel="stylesheet" href="css/finance-calculators.css?v=1" />
@@ -475,6 +476,16 @@
       </section>
 
       <section
+        id="panel-gift"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-gift"
+        hidden
+      >
+        <div id="gift-root" class="gift-root"></div>
+      </section>
+
+      <section
         id="panel-financial"
         class="tab-panel"
         role="tabpanel"
@@ -694,6 +705,19 @@
             Health
           </button>
         </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-gift"
+            aria-controls="panel-gift"
+            aria-selected="false"
+            data-tab="gift"
+          >
+            Gift
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -905,6 +929,8 @@
     <script src="js/expense-panel.js?v=1"></script>
     <script src="js/health-store.js?v=1"></script>
     <script src="js/health-panel.js?v=1"></script>
+    <script src="js/gift-store.js?v=1"></script>
+    <script src="js/gift-panel.js?v=1"></script>
     <script src="js/financial-store.js?v=1"></script>
     <script src="js/finance-calculators/core.js?v=1"></script>
     <script src="js/finance-calculators/investment-growth.js?v=1"></script>
@@ -927,7 +953,7 @@
     <script src="js/financial-panel.js?v=7"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=13"></script>
-    <script src="js/app.js?v=12"></script>
+    <script src="js/tabs.js?v=14"></script>
+    <script src="js/app.js?v=13"></script>
   </body>
 </html>
