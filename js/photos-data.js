@@ -5,6 +5,22 @@ window.JapaPhotosData = {
   folder: "Images",
   items: [
     {
+      file: "chaitanya-ji-mahaprabhu.webp",
+      name: "Chaitanya Ji Mahaprabhu",
+    },
+    {
+      file: "Lord Chaitanya Mahaprabhu.jpg",
+      name: "Lord Chaitanya Mahaprabhu",
+    },
+    {
+      file: "nityananda prabhu.jpg",
+      name: "Nityananda Prabhu",
+    },
+    {
+      file: "Panch tatva.jpg",
+      name: "Panch Tatva",
+    },
+    {
       file: "Sri Chaitanya Mahaprabhu.webp",
       name: "Sri Chaitanya Mahaprabhu",
     },
@@ -15,6 +31,10 @@ window.JapaPhotosData = {
     {
       file: "Sri Nityananda Prabhu.jpg",
       name: "Sri Nityananda Prabhu",
+    },
+    {
+      file: "Sri Nityananda Prabhuu.jpg",
+      name: "Sri Nityananda Prabhuu",
     },
     {
       file: "Sri Sri Gaura Nitai.jpg",
