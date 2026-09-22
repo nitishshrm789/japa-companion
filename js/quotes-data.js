@@ -21,80 +21,6 @@ window.JapaQuotes = {
 
   sections: [
     {
-      id: "shastra",
-      heading: "From the shastra",
-      quotes: [
-        {
-          text: "Hare Krishna Hare Krishna, Krishna Krishna Hare Hare / Hare Rama Hare Rama, Rama Rama Hare Hare — these sixteen names, composed of thirty-two syllables, are the only means to counteract the evil effects of Kali-yuga.",
-          source: "Kali-santarana Upanishad",
-        },
-        {
-          text: "In this age of Kali there is no other means, no other means, no other means for self-realization than chanting the holy name of Lord Hari.",
-          source: "Brihad-naradiya Purana 3.8.126 (as cited in Caitanya-caritamrita)",
-        },
-        {
-          text: "One who chants the holy name of the Lord is immediately freed from the reactions of unlimited sins, even if he chants indirectly, jokingly, or for entertainment.",
-          source: "Srimad-Bhagavatam 6.2.14 (teaching on the power of the holy name)",
-        },
-        {
-          text: "The holy name of Krishna is transcendentally blissful. It bestows all spiritual benedictions, for it is Krishna Himself.",
-          source: "Padma Purana (cited by the Goswamis on the nature of the Name)",
-        },
-      ],
-    },
-    {
-      id: "caitanya",
-      heading: "Sri Caitanya Mahaprabhu",
-      quotes: [
-        {
-          text: "Glory to the Sri Krishna sankirtana, which cleanses the heart of all the dust accumulated for years and extinguishes the fire of conditional life. Such sankirtana increases the ocean of transcendental bliss.",
-          source: "Sri Siksastakam, Verse 1",
-        },
-        {
-          text: "O my Lord, Your holy name alone can render all benediction upon living beings, and thus You have hundreds and millions of names. In these names You have invested all Your transcendental energies.",
-          source: "Sri Siksastakam, Verse 2",
-        },
-        {
-          text: "One should chant the holy name of the Lord in a humble state of mind, thinking oneself lower than the straw in the street; one should be more tolerant than a tree, devoid of all sense of false prestige, and ready to offer all respect to others. In such a state of mind one can chant the holy name constantly.",
-          source: "Sri Siksastakam, Verse 3",
-        },
-        {
-          text: "O son of Maharaja Nanda, I am Your eternal servitor, yet somehow I have fallen into the ocean of birth and death. Please pick me up from this ocean of death and place me as one of the atoms at Your lotus feet.",
-          source: "Sri Siksastakam, Verse 5 — mood of dependence while chanting",
-        },
-        {
-          text: "Mahaprabhu taught that the holy name should be chanted always — walking, sitting, eating, resting — with affection, not dryly.",
-          source: "Mood of Sri Caitanya Mahaprabhu (Nama-bhajana)",
-        },
-      ],
-    },
-    {
-      id: "goswamis",
-      heading: "The Six Goswamis",
-      quotes: [
-        {
-          text: "The holy name is identical with Krishna. When the Name appears on the tongue, Krishna Himself appears. Therefore chant with reverence and love, as if speaking directly to the Lord.",
-          source: "Teaching of the Goswamis on nama-tattva",
-        },
-        {
-          text: "One should chant the holy name in the association of devotees, with faith, and with a sincere desire to please Krishna — not for show, not for reputation, but for loving service.",
-          source: "Mood of Srila Rupa Goswami (bhakti-sadhana)",
-        },
-        {
-          text: "Srila Rupa Goswami teaches enthusiasm (utsaha), firm confidence (nishchaya), and patience (dhairya) as essential for success in bhakti. Bring these three into every round of japa.",
-          source: "Upadeshamrita — principles for sadhana",
-        },
-        {
-          text: "The Goswamis lived only to taste and distribute the holy name and the pastimes of Radha-Krishna. Let each bead be an offering of that same thirst.",
-          source: "Example of the Six Goswamis of Vrindavan",
-        },
-        {
-          text: "Chanting without offenses and remembering Krishna’s form, qualities, and pastimes transforms the Name from syllables into living nectar.",
-          source: "Guidance from the Goswami writings on offenseless nama",
-        },
-      ],
-    },
-    {
       id: "prabhupada",
       heading: "Srila Prabhupada",
       quotes: [
@@ -121,6 +47,124 @@ window.JapaQuotes = {
         {
           text: "When you feel weak or dry, still chant. The holy name will revive your enthusiasm. Do not give up — Krishna is waiting in His name.",
           source: "Srila Prabhupada — perseverance in nama",
+        },
+        {
+          text: "Please chant sixteen rounds of the Hare Krishna maha-mantra daily. This is the foundation. Without this minimum, spiritual life remains weak; with it, Krishna consciousness becomes strong and joyful.",
+          source: "Srila Prabhupada — letter guidance on daily chanting",
+        },
+        {
+          text: "Chanting is not a mechanical process. Hear yourself chanting. Concentrate on the sound vibration of the holy name. Then your mind will become peaceful and Krishna will reveal Himself.",
+          source: "Srila Prabhupada — letter mood on hearing the Name",
+        },
+        {
+          text: "If you feel disturbed or restless, chant Hare Krishna more. The holy name is the medicine. Do not try to solve everything by the mind alone — take shelter of the Name.",
+          source: "Srila Prabhupada — letter encouragement on nama as shelter",
+        },
+        {
+          text: "Wherever you are, in any condition, you can chant Hare Krishna. This is the special mercy of Lord Caitanya for this age. Never think you are too fallen to chant.",
+          source: "Srila Prabhupada — letter teaching on universal access to the Name",
+        },
+      ],
+    },
+    {
+      id: "caitanya",
+      heading: "Sri Caitanya Mahaprabhu",
+      quotes: [
+        {
+          text: "Glory to the Sri Krishna sankirtana, which cleanses the heart of all the dust accumulated for years and extinguishes the fire of conditional life. Such sankirtana increases the ocean of transcendental bliss.",
+          source: "Sri Siksastakam, Verse 1",
+        },
+        {
+          text: "Just as dust covers a mirror and hides its clear reflection, material desires cover the heart. Chanting the holy name washes that dust away, and the soul again sees Krishna clearly.",
+          source: "Sri Caitanya Mahaprabhu — teaching on cleansing the heart through nama",
+        },
+        {
+          text: "O my Lord, Your holy name alone can render all benediction upon living beings, and thus You have hundreds and millions of names. In these names You have invested all Your transcendental energies.",
+          source: "Sri Siksastakam, Verse 2",
+        },
+        {
+          text: "One should chant the holy name of the Lord in a humble state of mind, thinking oneself lower than the straw in the street; one should be more tolerant than a tree, devoid of all sense of false prestige, and ready to offer all respect to others. In such a state of mind one can chant the holy name constantly.",
+          source: "Sri Siksastakam, Verse 3",
+        },
+        {
+          text: "O son of Maharaja Nanda, I am Your eternal servitor, yet somehow I have fallen into the ocean of birth and death. Please pick me up from this ocean of death and place me as one of the atoms at Your lotus feet.",
+          source: "Sri Siksastakam, Verse 5 — mood of dependence while chanting",
+        },
+        {
+          text: "Mahaprabhu taught that the holy name should be chanted always — walking, sitting, eating, resting — with affection, not dryly.",
+          source: "Mood of Sri Caitanya Mahaprabhu (Nama-bhajana)",
+        },
+        {
+          text: "By continuous chanting, the fire of material existence cools, and the heart becomes soft with love. This is the gift of Lord Caitanya’s sankirtana movement.",
+          source: "Sri Caitanya Mahaprabhu — on sankirtana extinguishing material fire",
+        },
+        {
+          text: "There is no hard and soft rule for chanting the holy name. Whether pure or impure, learned or foolish — everyone should chant Hare Krishna and taste the cleansing power of the Name.",
+          source: "Sri Caitanya Mahaprabhu — open invitation to chant",
+        },
+      ],
+    },
+    {
+      id: "shastra",
+      heading: "From the Shastra",
+      quotes: [
+        {
+          text: "Hare Krishna Hare Krishna, Krishna Krishna Hare Hare / Hare Rama Hare Rama, Rama Rama Hare Hare — these sixteen names, composed of thirty-two syllables, are the only means to counteract the evil effects of Kali-yuga.",
+          source: "Kali-santarana Upanishad",
+        },
+        {
+          text: "In this age of Kali there is no other means, no other means, no other means for self-realization than chanting the holy name of Lord Hari.",
+          source: "Brihad-naradiya Purana 3.8.126 (as cited in Caitanya-caritamrita)",
+        },
+        {
+          text: "One who chants the holy name of the Lord is immediately freed from the reactions of unlimited sins, even if he chants indirectly, jokingly, or for entertainment.",
+          source: "Srimad-Bhagavatam 6.2.14 (teaching on the power of the holy name)",
+        },
+        {
+          text: "The holy name of Krishna is transcendentally blissful. It bestows all spiritual benedictions, for it is Krishna Himself.",
+          source: "Padma Purana (cited by the Goswamis on the nature of the Name)",
+        },
+        {
+          text: "In Kali-yuga, intelligent persons perform congregational chanting to worship the incarnation of Godhead who constantly sings the names of Krishna.",
+          source: "Srimad-Bhagavatam 11.5.32 — on sankirtana in Kali-yuga",
+        },
+        {
+          text: "Whatever result was obtained in Satya-yuga by meditating on Vishnu, in Treta by performing sacrifices, and in Dvapara by serving the Lord’s lotus feet, can be obtained in Kali-yuga simply by chanting the Hare Krishna maha-mantra.",
+          source: "Srimad-Bhagavatam 12.3.52 — glory of the maha-mantra",
+        },
+        {
+          text: "The sixteen names of the Hare Krishna maha-mantra are the sound incarnation of the Lord. By vibrating this mantra, the living being awakens to his eternal relationship with Krishna.",
+          source: "Shastric teaching on the maha-mantra as the Lord’s sound form",
+        },
+        {
+          text: "Chanting the holy names of Hari destroys the dense darkness of Kali and restores the natural joy of the soul. Therefore the scriptures repeatedly urge: chant, chant, chant the Name of Hari.",
+          source: "Puranic emphasis on harinama in the age of Kali",
+        },
+      ],
+    },
+    {
+      id: "goswamis",
+      heading: "The Six Goswamis",
+      quotes: [
+        {
+          text: "The holy name is identical with Krishna. When the Name appears on the tongue, Krishna Himself appears. Therefore chant with reverence and love, as if speaking directly to the Lord.",
+          source: "Teaching of the Goswamis on nama-tattva",
+        },
+        {
+          text: "One should chant the holy name in the association of devotees, with faith, and with a sincere desire to please Krishna — not for show, not for reputation, but for loving service.",
+          source: "Mood of Srila Rupa Goswami (bhakti-sadhana)",
+        },
+        {
+          text: "Srila Rupa Goswami teaches enthusiasm (utsaha), firm confidence (nishchaya), and patience (dhairya) as essential for success in bhakti. Bring these three into every round of japa.",
+          source: "Upadeshamrita — principles for sadhana",
+        },
+        {
+          text: "The Goswamis lived only to taste and distribute the holy name and the pastimes of Radha-Krishna. Let each bead be an offering of that same thirst.",
+          source: "Example of the Six Goswamis of Vrindavan",
+        },
+        {
+          text: "Chanting without offenses and remembering Krishna’s form, qualities, and pastimes transforms the Name from syllables into living nectar.",
+          source: "Guidance from the Goswami writings on offenseless nama",
         },
       ],
     },

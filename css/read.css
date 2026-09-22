@@ -2,6 +2,40 @@
   text-align: center;
   color: var(--color-muted);
   font-size: 0.9rem;
+  margin-bottom: var(--space-sm);
+}
+
+.read-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: var(--space-md);
+}
+
+.read-filter-btn {
+  min-height: 2.35rem;
+  padding: 0.35rem 0.85rem;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.read-filter-btn.is-active {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #fff;
+}
+
+.read-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-md);
 }
 
 .read-root {
