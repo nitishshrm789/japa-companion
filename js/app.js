@@ -302,6 +302,11 @@
       if (name === "prayer") {
         window.JapaPrayerPanel.render(document.getElementById("prayer-root"));
       }
+      if (name === "vaishnava-songs") {
+        window.JapaVaishnavaSongPanel.render(
+          document.getElementById("vaishnava-songs-root")
+        );
+      }
       if (name === "financial") {
         window.JapaFinancialPanel.render(
           document.getElementById("financial-root")
@@ -333,6 +338,9 @@
     window.JapaGiftPanel.render(document.getElementById("gift-root"));
     window.JapaSlokaPanel.render(document.getElementById("slokas-root"));
     window.JapaPrayerPanel.render(document.getElementById("prayer-root"));
+    window.JapaVaishnavaSongPanel.render(
+      document.getElementById("vaishnava-songs-root")
+    );
     window.JapaFinancialPanel.render(document.getElementById("financial-root"));
     refreshResults();
   } catch (error) {

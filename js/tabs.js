@@ -22,6 +22,7 @@ window.JapaTabs = {
     gift: "Gift",
     slokas: "Slokas",
     prayer: "Prayer",
+    "vaishnava-songs": "Vaishnava Songs",
   },
 
   STAR_SCHEDULES: [
@@ -91,6 +92,7 @@ window.JapaTabs = {
       gift: document.getElementById("panel-gift"),
       slokas: document.getElementById("panel-slokas"),
       prayer: document.getElementById("panel-prayer"),
+      "vaishnava-songs": document.getElementById("panel-vaishnava-songs"),
       financial: document.getElementById("panel-financial"),
     };
 
