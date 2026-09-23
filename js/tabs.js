@@ -21,6 +21,7 @@ window.JapaTabs = {
     skills: "Skills",
     gift: "Gift",
     slokas: "Slokas",
+    prayer: "Prayer",
   },
 
   STAR_SCHEDULES: [
@@ -89,6 +90,7 @@ window.JapaTabs = {
       skills: document.getElementById("panel-skills"),
       gift: document.getElementById("panel-gift"),
       slokas: document.getElementById("panel-slokas"),
+      prayer: document.getElementById("panel-prayer"),
       financial: document.getElementById("panel-financial"),
     };
 

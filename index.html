@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="css/skill.css?v=1" />
     <link rel="stylesheet" href="css/gift.css?v=1" />
     <link rel="stylesheet" href="css/sloka.css?v=2" />
+    <link rel="stylesheet" href="css/prayer.css?v=1" />
     <link rel="stylesheet" href="css/financial.css?v=5" />
     <link rel="stylesheet" href="css/financial-education.css?v=1" />
     <link rel="stylesheet" href="css/finance-calculators.css?v=1" />
@@ -508,6 +509,16 @@
       </section>
 
       <section
+        id="panel-prayer"
+        class="tab-panel"
+        role="tabpanel"
+        aria-labelledby="tab-prayer"
+        hidden
+      >
+        <div id="prayer-root" class="prayer-root"></div>
+      </section>
+
+      <section
         id="panel-financial"
         class="tab-panel"
         role="tabpanel"
@@ -766,6 +777,19 @@
             Slokas
           </button>
         </li>
+        <li>
+          <button
+            type="button"
+            class="app-menu__item"
+            role="tab"
+            id="tab-prayer"
+            aria-controls="panel-prayer"
+            aria-selected="false"
+            data-tab="prayer"
+          >
+            Prayer
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -983,6 +1007,8 @@
     <script src="js/gift-panel.js?v=1"></script>
     <script src="js/sloka-store.js?v=2"></script>
     <script src="js/sloka-panel.js?v=2"></script>
+    <script src="js/prayer-store.js?v=1"></script>
+    <script src="js/prayer-panel.js?v=1"></script>
     <script src="js/financial-store.js?v=1"></script>
     <script src="js/finance-calculators/core.js?v=1"></script>
     <script src="js/finance-calculators/investment-growth.js?v=1"></script>
@@ -1005,7 +1031,7 @@
     <script src="js/financial-panel.js?v=7"></script>
     <script src="js/results-panel.js?v=7"></script>
     <script src="js/timer-fullscreen.js?v=3"></script>
-    <script src="js/tabs.js?v=16"></script>
-    <script src="js/app.js?v=15"></script>
+    <script src="js/tabs.js?v=17"></script>
+    <script src="js/app.js?v=16"></script>
   </body>
 </html>
